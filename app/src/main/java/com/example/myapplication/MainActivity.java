@@ -28,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
         //
         firebaseAuth = FirebaseAuth.getInstance();
         signupEmail = findViewById(R.id.edEmail);
-        signupPassword = findViewById(R.id.edPassword);
+        signupPassword = findViewById(R.id.ConfirmPassword);
         btnSignUp = findViewById(R.id.btnSignUp);
-        loginRedirectText = findViewById(R.id.txtSignIn);
+        loginRedirectText = findViewById(R.id.txt);
         //
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override

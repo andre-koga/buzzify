@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#1DB954"
     tools:context=".MainActivity">
 
     <androidx.cardview.widget.CardView
@@ -20,69 +21,129 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="600dp"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/custom_round_background"
+            android:backgroundTint="#000000"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="12dp">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:translationX="-20dp"
+                app:srcCompat="@drawable/spotifylogopngimage" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="137dp"
                 android:layout_height="wrap_content"
-                android:text="Sign Up"
-                android:textSize="36sp"
+                android:text="Sign up"
                 android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="@color/myblue"
-                />
+                android:translationX="20dp"
+                android:translationY="-40dp" />
 
             <EditText
                 android:id="@+id/edEmail"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_margin="15dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/custom_round_background"
                 android:drawableStart="@drawable/ic_person_24"
                 android:drawablePadding="8dp"
-                android:padding="8dp"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
-                android:textColor="@color/black"
+                android:padding="8dp"
+                android:textColorHint="#CDC9C9" />
 
-                />
 
             <EditText
-                android:id="@+id/edPassword"
+                android:id="@+id/ConfirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_margin="15dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/custom_round_background"
                 android:drawableStart="@drawable/ic_lock_24"
                 android:drawablePadding="8dp"
-                android:padding="8dp"
                 android:hint="Password"
                 android:inputType="textPassword"
-                android:textColor="@color/black" />
+                android:padding="8dp"
+                android:textColorHint="#CDC9C9" />
+
+            <EditText
+                android:id="@+id/ConfirmPassword2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/custom_round_background"
+                android:drawableStart="@drawable/ic_lock_24"
+                android:drawablePadding="8dp"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:padding="8dp"
+                android:textColorHint="#CDC9C9" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="64dp"
+                android:layout_height="wrap_content"
+                android:translationY="27dp"
+                app:srcCompat="@drawable/baseline_check_circle_24" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="64dp"
+                android:layout_height="wrap_content"
+                android:translationY="40dp"
+                app:srcCompat="@drawable/baseline_check_circle_24" />
+
+            <TextView
+                android:id="@+id/txt3"
+                android:layout_width="293dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:text="Password length must be greater than 8"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:translationX="50dp"
+                android:translationY="-40dp" />
+
+            <TextView
+                android:id="@+id/txt2"
+                android:layout_width="242dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:text="Minimum 1 capitol letter in password"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:translationX="50dp"
+                android:translationY="-60dp" />
 
             <Button
                 android:id="@+id/btnSignUp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
+                android:backgroundTint="#1DB954"
+                android:text="Sign Up"
                 android:textSize="25sp"
-                android:text="Sign Up" />
+                android:translationY="-80dp" />
 
             <TextView
-                android:id="@+id/txtSignIn"
+                android:id="@+id/txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
                 android:text="Already have an account? Sign in Here"
-                android:textSize="18sp" />
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:translationY="-70dp" />
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
