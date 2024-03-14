@@ -12,6 +12,8 @@ Designed in Figma and transcribed into Android Studio; Website made in Google Pa
 - Valentina Garcia
 - Xavier Genio
 
+## Website
+
 ## Description:
 Create, visualize, and manage your Spotify Wrapped using Buzzify!
 
