@@ -13,18 +13,26 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.spotify_ui.MainActivity;
+import com.example.spotify_ui.R;
 import com.example.spotify_ui.Wraps;
 import com.example.spotify_ui.databinding.FragmentHomeBinding;
+import com.example.spotify_ui.ui.dashboard.DashboardFragment;
 
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
 
+//    public AppCompatButton test;
+    public Button homeBttn;
+    public Button dashboardBttn;
+    public Button notificationBttn;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -42,6 +50,8 @@ public class HomeFragment extends Fragment {
             Wraps wrap = wrap_list.get(i);
             wrap.createWidget(main, wrap, HomeFragment.this);
         }
+
+
         generate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,11 +61,42 @@ public class HomeFragment extends Fragment {
             }
 
         });
+
+
         return root;
 
 
 
     }
+
+    public void onViewCreated(@NonNull View view, Bundle SavedInstance) {
+
+        homeBttn = view.findViewById(R.id.button2);
+        homeBttn.setVisibility(View.VISIBLE);
+
+        dashboardBttn = view.findViewById(R.id.button3);
+        dashboardBttn.setVisibility(View.VISIBLE);
+
+        notificationBttn = view.findViewById(R.id.button4);
+        notificationBttn.setVisibility(View.VISIBLE);
+
+
+        dashboardBttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.action_navigation_home_to_navigation_dashboard);
+            }
+        });
+
+        notificationBttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.action_navigation_home_to_navigation_notifications);
+            }
+        });
+
+    }
+
 
     @Override
     public void onDestroyView() {

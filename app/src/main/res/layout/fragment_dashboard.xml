@@ -14,4 +14,35 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="30dp"
         android:orientation="vertical" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Home" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Dashboard" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="132dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Notification" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

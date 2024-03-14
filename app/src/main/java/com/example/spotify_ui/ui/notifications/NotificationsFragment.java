@@ -4,17 +4,24 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.spotify_ui.R;
 import com.example.spotify_ui.databinding.FragmentNotificationsBinding;
+import com.example.spotify_ui.ui.home.HomeFragment;
 
 public class NotificationsFragment extends Fragment {
 
     private FragmentNotificationsBinding binding;
+    public Button homeBttn;
+    public Button dashboardBttn;
+    public Button notificationBttn;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -28,6 +35,35 @@ public class NotificationsFragment extends Fragment {
         notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
+
+    public void onViewCreated(@NonNull View view, Bundle SavedInstance) {
+
+        homeBttn = view.findViewById(R.id.button2);
+        homeBttn.setVisibility(View.VISIBLE);
+
+        dashboardBttn = view.findViewById(R.id.button3);
+        dashboardBttn.setVisibility(View.VISIBLE);
+
+        notificationBttn = view.findViewById(R.id.button4);
+        notificationBttn.setVisibility(View.VISIBLE);
+
+
+        dashboardBttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(NotificationsFragment.this).navigate(R.id.action_navigation_notifications_to_navigation_dashboard);
+            }
+        });
+
+        homeBttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(NotificationsFragment.this).navigate(R.id.action_navigation_notifications_to_navigation_home);
+            }
+        });
+
+    }
+
 
     @Override
     public void onDestroyView() {
