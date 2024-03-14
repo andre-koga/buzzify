@@ -29,7 +29,7 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
 
     // Replace with your own client ID and redirect URI
-    public static final String CLIENT_ID = "87ad3fa96051492e972af2783d8a6e81";
+    public static final String CLIENT_ID = "c5d5db9b10f6403090a273b1e24bee8a";
     public static final String REDIRECT_URI = "SpotifyAcc://auth";
 
     // Request codes for token and code
