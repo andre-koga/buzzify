@@ -17,6 +17,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.spotify_ui.ui.home.HomeFragment;
 
@@ -70,13 +73,16 @@ public class Wraps extends Activity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new WrapPage();
-                FragmentManager fragmentManager = frag.getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-                fragmentTransaction.replace(R.id.container, fragment);
-                fragmentTransaction.addToBackStack("returnable");
-                fragmentTransaction.commit();
+                NavController navController = Navigation.findNavController(v);
+                navController.navigate(R.id.navigation_wrap_page);
+////                NavHostFragment.findNavController(new WrapPage()).navigate(R.id.navigation_wrap_page);
+//                Fragment fragment = new WrapPage();
+//                FragmentManager fragmentManager = frag.getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//
+//                fragmentTransaction.replace(R.id.container, fragment);
+//                fragmentTransaction.addToBackStack("returnable");
+//                fragmentTransaction.commit();
             }
         });
 
