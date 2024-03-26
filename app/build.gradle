@@ -12,7 +12,7 @@ android {
         targetSdk 34
         versionCode 1
         versionName "1.0"
-        manifestPlaceholders = [redirectSchemeName: "SpotifyAcc", redirectHostName: "auth"]
+        manifestPlaceholders = [redirectSchemeName: "spotifyacc", redirectHostName: "auth"]
 
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

@@ -17,7 +17,6 @@ import com.spotify.sdk.android.auth.AuthorizationResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileWriter;
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -28,11 +27,9 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Replace with your own client ID and redirect URI
     public static final String CLIENT_ID = "c5d5db9b10f6403090a273b1e24bee8a";
-    public static final String REDIRECT_URI = "SpotifyAcc://auth";
+    public static final String REDIRECT_URI = "spotifyacc://auth";
 
-    // Request codes for token and code
     public static final int AUTH_TOKEN_REQUEST_CODE = 0;
     public static final int AUTH_CODE_REQUEST_CODE = 1;
 
@@ -47,16 +44,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize the views and buttons
-        tokenTextView = findViewById(R.id.token_text_view);
-        codeTextView = findViewById(R.id.code_text_view);
-        profileTextView = findViewById(R.id.response_text_view);
+        // Initialize the views
+        tokenTextView = (TextView) findViewById(R.id.token_text_view);
+        codeTextView = (TextView) findViewById(R.id.code_text_view);
+        profileTextView = (TextView) findViewById(R.id.response_text_view);
 
-        Button tokenBtn = findViewById(R.id.token_btn);
-        Button codeBtn = findViewById(R.id.code_btn);
-        Button profileBtn = findViewById(R.id.profile_btn);
+        // Initialize the buttons
+        Button tokenBtn = (Button) findViewById(R.id.token_btn);
+        Button codeBtn = (Button) findViewById(R.id.code_btn);
+        Button profileBtn = (Button) findViewById(R.id.profile_btn);
 
-        // Set click listeners for buttons
+        // Set the click listeners for the buttons
+
         tokenBtn.setOnClickListener((v) -> {
             getToken();
         });
@@ -71,24 +70,39 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    // Method to request token from Spotify
+    /**
+     * Get token from Spotify
+     * This method will open the Spotify login activity and get the token
+     * What is token?
+     * https://developer.spotify.com/documentation/general/guides/authorization-guide/
+     */
     public void getToken() {
         final AuthorizationRequest request = getAuthenticationRequest(AuthorizationResponse.Type.TOKEN);
         AuthorizationClient.openLoginActivity(MainActivity.this, AUTH_TOKEN_REQUEST_CODE, request);
     }
 
-    // Method to request code from Spotify
+    /**
+     * Get code from Spotify
+     * This method will open the Spotify login activity and get the code
+     * What is code?
+     * https://developer.spotify.com/documentation/general/guides/authorization-guide/
+     */
     public void getCode() {
         final AuthorizationRequest request = getAuthenticationRequest(AuthorizationResponse.Type.CODE);
         AuthorizationClient.openLoginActivity(MainActivity.this, AUTH_CODE_REQUEST_CODE, request);
     }
 
-    // Handle response from Spotify activity
+
+    /**
+     * When the app leaves this activity to momentarily get a token/code, this function
+     * fetches the result of that external activity to get the response from Spotify
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         final AuthorizationResponse response = AuthorizationClient.getResponse(resultCode, data);
 
+        // Check which request code is present (if any)
         if (AUTH_TOKEN_REQUEST_CODE == requestCode) {
             mAccessToken = response.getAccessToken();
             setTextAsync(mAccessToken, tokenTextView);
@@ -99,13 +113,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Get user profile from Spotify
+    /**
+     * Get user profile
+     * This method will get the user profile using the token
+     */
     public void onGetUserProfileClicked() {
         if (mAccessToken == null) {
             Toast.makeText(this, "You need to get an access token first!", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        // Create a request to get the user profile
         final Request request = new Request.Builder()
                 .url("https://api.spotify.com/v1/me")
                 .addHeader("Authorization", "Bearer " + mAccessToken)
@@ -118,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d("HTTP", "Failed to fetch data: " + e);
-                Toast.makeText(MainActivity.this, "Failed to fetch data, check Logcat",
+                Toast.makeText(MainActivity.this, "Failed to fetch data, watch Logcat for more details",
                         Toast.LENGTH_SHORT).show();
             }
 
@@ -126,48 +144,50 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 try {
                     final JSONObject jsonObject = new JSONObject(response.body().string());
-                    saveJsonToFile(jsonObject);
                     setTextAsync(jsonObject.toString(3), profileTextView);
                 } catch (JSONException e) {
                     Log.d("JSON", "Failed to parse data: " + e);
-                    Toast.makeText(MainActivity.this, "Failed to parse data, check Logcat",
+                    Toast.makeText(MainActivity.this, "Failed to parse data, watch Logcat for more details",
                             Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    // Save JSON to a file
-    private void saveJsonToFile(JSONObject jsonObject) {
-        String filename = "spotify_profile.json";
-        try (FileWriter file = new FileWriter(getFilesDir() + "/" + filename)) {
-            file.write(jsonObject.toString());
-            Log.d("File", "JSON saved to " + filename);
-        } catch (IOException e) {
-            Log.e("File", "Error writing JSON to file", e);
-        }
-    }
-
-    // Update TextView asynchronously
+    /**
+     * Creates a UI thread to update a TextView in the background
+     * Reduces UI latency and makes the system perform more consistently
+     *
+     * @param text the text to set
+     * @param textView TextView object to update
+     */
     private void setTextAsync(final String text, TextView textView) {
         runOnUiThread(() -> textView.setText(text));
     }
 
-    // Get authentication request
+    /**
+     * Get authentication request
+     *
+     * @param type the type of the request
+     * @return the authentication request
+     */
     private AuthorizationRequest getAuthenticationRequest(AuthorizationResponse.Type type) {
         return new AuthorizationRequest.Builder(CLIENT_ID, type, getRedirectUri().toString())
                 .setShowDialog(false)
-                .setScopes(new String[] { "user-read-email" })
+                .setScopes(new String[] { "user-read-email" }) // <--- Change the scope of your requested token here
                 .setCampaign("your-campaign-token")
                 .build();
     }
 
-    // Get redirect URI for Spotify
+    /**
+     * Gets the redirect Uri for Spotify
+     *
+     * @return redirect Uri object
+     */
     private Uri getRedirectUri() {
         return Uri.parse(REDIRECT_URI);
     }
 
-    // Cancel ongoing call
     private void cancelCall() {
         if (mCall != null) {
             mCall.cancel();
