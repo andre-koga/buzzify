@@ -1,4 +1,4 @@
-package com.example.spotify_ui.ui.notifications;
+package com.example.spotify_ui.ui.publics;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,26 +13,25 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.spotify_ui.R;
-import com.example.spotify_ui.databinding.FragmentNotificationsBinding;
-import com.example.spotify_ui.ui.home.HomeFragment;
+import com.example.spotify_ui.databinding.FragmentPublicBinding;
 
-public class NotificationsFragment extends Fragment {
+public class PublicFragment extends Fragment {
 
-    private FragmentNotificationsBinding binding;
+    private FragmentPublicBinding binding;
     public Button homeBttn;
     public Button dashboardBttn;
     public Button notificationBttn;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        NotificationsViewModel notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
+        PublicViewModel publicViewModel =
+                new ViewModelProvider(this).get(PublicViewModel.class);
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentPublicBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        publicViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
@@ -51,14 +50,14 @@ public class NotificationsFragment extends Fragment {
         dashboardBttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(NotificationsFragment.this).navigate(R.id.action_navigation_notifications_to_navigation_dashboard);
+                NavHostFragment.findNavController(PublicFragment.this).navigate(R.id.action_navigation_notifications_to_navigation_dashboard);
             }
         });
 
         homeBttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(NotificationsFragment.this).navigate(R.id.action_navigation_notifications_to_navigation_home);
+                NavHostFragment.findNavController(PublicFragment.this).navigate(R.id.action_navigation_notifications_to_navigation_home);
             }
         });
 

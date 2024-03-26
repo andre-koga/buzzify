@@ -1,4 +1,4 @@
-package com.example.spotify_ui.ui.dashboard;
+package com.example.spotify_ui.ui.friends;
 
 import static com.example.spotify_ui.Visibility.YOU;
 import static com.example.spotify_ui.Wraps.wrap_list;
@@ -17,23 +17,21 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.spotify_ui.R;
-import com.example.spotify_ui.Visibility;
-import com.example.spotify_ui.WrapPage;
 import com.example.spotify_ui.Wraps;
-import com.example.spotify_ui.databinding.FragmentDashboardBinding;
+import com.example.spotify_ui.databinding.FragmentFriendsBinding;
 
-public class DashboardFragment extends Fragment {
+public class FragmentFriends extends Fragment {
 
-    private FragmentDashboardBinding binding;
+    private FragmentFriendsBinding binding;
     public Button homeBttn;
     public Button dashboardBttn;
     public Button notificationBttn;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        FriendsViewModel friendsViewModel =
+                new ViewModelProvider(this).get(FriendsViewModel.class);
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentFriendsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final LinearLayout main = binding.main;
@@ -55,14 +53,14 @@ public class DashboardFragment extends Fragment {
         homeBttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(DashboardFragment.this).navigate(R.id.action_navigation_dashboard_to_navigation_home);
+                NavHostFragment.findNavController(FragmentFriends.this).navigate(R.id.action_navigation_dashboard_to_navigation_home);
             }
         });
 
         notificationBttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(DashboardFragment.this).navigate(R.id.action_navigation_dashboard_to_navigation_notifications);
+                NavHostFragment.findNavController(FragmentFriends.this).navigate(R.id.action_navigation_dashboard_to_navigation_notifications);
             }
         });
 
