@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1DB954"
+    android:background="@color/lighterBlack"
     tools:context=".LoginActivity">
 
     <androidx.cardview.widget.CardView
@@ -56,6 +56,7 @@
                 android:drawablePadding="8dp"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
+                android:textColor="@color/white"
                 android:padding="8dp"
                 android:textColorHint="#CDC9C9" />
 
@@ -64,6 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="15dp"
+                android:textColor="@color/white"
                 android:background="@drawable/custom_round_background"
                 android:drawableStart="@drawable/ic_lock_24"
                 android:drawablePadding="8dp"
