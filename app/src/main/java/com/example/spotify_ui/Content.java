@@ -1,28 +1,46 @@
 package com.example.spotify_ui;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.spotify_ui.databinding.TitleMainBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
 
 
 public class Content extends AppCompatActivity {
 
 
     private AppBarConfiguration appBarConfiguration;
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setCustomView(R.layout.title_main);
+        View v = actionBar.getCustomView();
+        firebaseAuth = FirebaseAuth.getInstance();
+        Button btn = v.findViewById(R.id.user_button);
+        btn.setText(firebaseAuth.getCurrentUser().getEmail());
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Content.this, UserActivity.class);
+                startActivity(intent);
+            }
+        });
         setContentView(R.layout.content);
+
 
 //
 //        BottomNavigationView navView = findViewById(R.id.nav_view);

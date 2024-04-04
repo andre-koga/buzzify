@@ -2,22 +2,17 @@ package com.example.spotify_ui;
 
 import android.os.Bundle;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.example.spotify_ui.databinding.ActivityMainBinding;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -44,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
 
         firebaseAuth = FirebaseAuth.getInstance();
         signupEmail = findViewById(R.id.edEmail);
@@ -54,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
         final String[] emailID = new String[1];
         final String[] paswd = new String[1];
         final String[] paswd2 = new String[1];
+        if (firebaseAuth.getCurrentUser() != null) {
+            Toast.makeText(MainActivity.this, "User logged in ", Toast.LENGTH_SHORT).show();
+            Intent I = new Intent(MainActivity.this, Content.class);
+            startActivity(I);
+        }
 
         //
         btnSignUp.setOnClickListener(new View.OnClickListener() {
