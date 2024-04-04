@@ -1,7 +1,6 @@
 package com.example.spotify_ui;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -31,17 +30,12 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
 
         firebaseAuth = FirebaseAuth.getInstance();
         loginEmail = findViewById(R.id.loginEmail);
         loginPassword = findViewById(R.id.loginPassword);
         btnLogin = findViewById(R.id.btnLogIn);
         registerRedirectText = findViewById(R.id.txtRegister);
-
-
-
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -60,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         registerRedirectText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent I = new Intent(LoginActivity.this, MainActivity.class);
+                Intent I = new Intent(LoginActivity.this, MainActivityAuthentication.class);
                 startActivity(I);
             }
         });
@@ -101,6 +95,5 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         firebaseAuth.addAuthStateListener(authStateListener);
-
     }
 }

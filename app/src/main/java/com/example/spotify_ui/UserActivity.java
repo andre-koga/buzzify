@@ -1,6 +1,5 @@
 package com.example.spotify_ui;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -26,12 +25,9 @@ public class UserActivity extends AppCompatActivity {
     Button btnLogOut;
     Button btnDelete;
     Button btnResetPassword;
-
-    Button btnBack;
     TextView txtUser;
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
-
     final String TAG = "UserActivity";
 
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -40,34 +36,22 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
-
         firebaseAuth = FirebaseAuth.getInstance();
         btnLogOut = (Button) findViewById(R.id.btnLogOut);
         btnDelete = (Button) findViewById(R.id.btnDeleteAccount);
         btnResetPassword = (Button) findViewById(R.id.btnResetPassword);
-        btnBack = (Button) findViewById(R.id.back_button);
 
         txtUser = (TextView) findViewById(R.id.txtUser);
         user = firebaseAuth.getCurrentUser();
 
-
-        txtUser.setText(user.getEmail());
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setCustomView(R.layout.title_main);
-        View v = actionBar.getCustomView();
-        Button btn = v.findViewById(R.id.user_button);
-        btn.setText(user.getEmail());
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Content.class);
-                startActivity(intent);
-            }
-        });
-
+        if (user == null ) {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        else {
+            txtUser.setText(user.getEmail());
+        }
 
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,5 +97,4 @@ public class UserActivity extends AppCompatActivity {
             }
         });
     }
-
 }
