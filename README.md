@@ -1,6 +1,14 @@
 ## Project Title:
 CS 2340 Project 2: Buzzify!
 
+## Authors / Roles:
+- Andre Koga - Product Owner
+- Xavier Genio - Scrum Master
+- Matthias Druhl - Developer
+- Tony Nguyen - Developer
+- Valentina Garcia - UI/UX
+- Ariam Netsereab
+
 ## Description:
 Create, visualize, and manage your Spotify Wraps using Buzzify!
 
@@ -9,10 +17,4 @@ Buzzify is a Spotify Wrap app designed to let users not only generate their own 
 ## Software:
 Designed in Figma and transcribed into Android Studio; Website made in Google Pages
 
-## Authors / Roles:
-- Andre Koga - Product Owner
-- Xavier Genio - Scrum Master
-- Matthias Druhl - Developer
-- Tony Nguyen - Developer
-- Valentina Garcia - UI/UX
-- Ariam Netsereab
+## Links:
