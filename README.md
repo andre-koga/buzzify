@@ -9,10 +9,10 @@ Buzzify is a Spotify Wrap app designed to let users not only generate their own 
 ## Software:
 Designed in Figma and transcribed into Android Studio; Website made in Google Pages
 
-## Authors:
-- Andre Koga
+## Authors / Roles:
+- Andre Koga - Product Owner
+- Xavier Genio - Scrum Master
+- Matthias Druhl - Developer
+- Tony Nguyen - Developer
+- Valentina Garcia - UI/UX
 - Ariam Netsereab
-- Matthias Druhl
-- Tony Nguyen
-- Valentina Garcia
-- Xavier Genio 
