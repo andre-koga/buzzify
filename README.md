@@ -18,3 +18,4 @@ Buzzify is a Spotify Wrap app designed to let users not only generate their own 
 Designed in Figma and transcribed into Android Studio; Website made in Google Pages
 
 ## Links:
+[Our website](https://sites.google.com/view/team5-proj2/our-app?authuser=0)
