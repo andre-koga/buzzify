@@ -1,3 +1,4 @@
+
 package com.example.spotify_ui.ui.home;
 
 import static com.example.spotify_ui.Visibility.YOU;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -25,7 +27,7 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
 
-//    public AppCompatButton test;
+    //    public AppCompatButton test;
     public Button homeBttn;
     public Button dashboardBttn;
     public Button notificationBttn;
@@ -37,6 +39,7 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
 
         final TextView textView = binding.textHome;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
