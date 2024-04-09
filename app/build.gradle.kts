@@ -16,6 +16,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -52,7 +53,14 @@ dependencies {
     implementation("androidx.core:core-ktx:+")
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.auth)
+    implementation("com.google.firebase:firebase-bom:32.8.0")
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.firebaseui:firebase-ui-firestore:8.0.2")
+    implementation("com.google.firebase:firebase-firestore-ktx:24.4.4")
+    implementation ("com.google.firebase:firebase-storage-ktx:20.1.0")
+    implementation ("com.google.firebase:firebase-messaging-ktx:23.1.2")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
 }

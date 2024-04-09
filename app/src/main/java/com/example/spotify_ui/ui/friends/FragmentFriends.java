@@ -1,8 +1,10 @@
+
 package com.example.spotify_ui.ui.friends;
 
 import static com.example.spotify_ui.Visibility.YOU;
 import static com.example.spotify_ui.Wraps.wrap_list;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.spotify_ui.FriendsList;
 import com.example.spotify_ui.R;
 import com.example.spotify_ui.Wraps;
 import com.example.spotify_ui.databinding.FragmentFriendsBinding;
@@ -26,6 +29,7 @@ public class FragmentFriends extends Fragment {
     public Button homeBttn;
     public Button dashboardBttn;
     public Button notificationBttn;
+    public Button btnFriends;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         FriendsViewModel friendsViewModel =
@@ -49,7 +53,15 @@ public class FragmentFriends extends Fragment {
 
         notificationBttn = view.findViewById(R.id.button4);
         notificationBttn.setVisibility(View.VISIBLE);
+        btnFriends = view.findViewById(R.id.button_friends); // Find the button by ID using the view passed to onViewCreated
 
+        btnFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), FriendsList.class); // Use getContext() to get the context
+                startActivity(intent);
+            }
+        });
         homeBttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

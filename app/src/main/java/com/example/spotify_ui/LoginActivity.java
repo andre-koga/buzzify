@@ -1,7 +1,5 @@
-package com.example.spotify_ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.spotify_ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,12 +32,17 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
         firebaseAuth = FirebaseAuth.getInstance();
         loginEmail = findViewById(R.id.loginEmail);
         loginPassword = findViewById(R.id.loginPassword);
         btnLogin = findViewById(R.id.btnLogIn);
         registerRedirectText = findViewById(R.id.txtRegister);
+
+
+
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -54,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         registerRedirectText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent I = new Intent(LoginActivity.this, MainActivityAuthentication.class);
+                Intent I = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(I);
             }
         });
@@ -95,5 +102,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         firebaseAuth.addAuthStateListener(authStateListener);
+
     }
 }

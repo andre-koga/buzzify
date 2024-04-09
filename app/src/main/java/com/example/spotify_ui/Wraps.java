@@ -27,12 +27,12 @@ import java.util.ArrayList;
 
 public class Wraps extends Activity {
     public static ArrayList<Wraps> wrap_list = new ArrayList<>(0);
-    private Visibility visible;
+    private final Visibility visible;
 
-    private String user;
+    private final String user;
 
-    private String wrap_name;
-    private String artists;
+    private final String wrap_name;
+    private final String artists;
 
     public Wraps(Visibility visible, String user, String wrap_name, String artists) {
         this.visible = visible;
