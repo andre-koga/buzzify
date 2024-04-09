@@ -27,6 +27,7 @@ public class UserActivity extends AppCompatActivity {
     Button btnLogOut;
     Button btnDelete;
     Button btnResetPassword;
+    Button btnFriends;
 
     Button btnBack;
     TextView txtUser;
@@ -47,11 +48,9 @@ public class UserActivity extends AppCompatActivity {
         btnDelete = (Button) findViewById(R.id.btnDeleteAccount);
         btnResetPassword = (Button) findViewById(R.id.btnResetPassword);
         btnBack = (Button) findViewById(R.id.back_button);
-
         txtUser = (TextView) findViewById(R.id.txtUser);
+        btnFriends = (Button) findViewById(R.id.button_friends);
         user = firebaseAuth.getCurrentUser();
-
-
         txtUser.setText(user.getEmail());
 
         ActionBar actionBar = getSupportActionBar();
@@ -60,12 +59,20 @@ public class UserActivity extends AppCompatActivity {
         View v = actionBar.getCustomView();
         Button btn = v.findViewById(R.id.user_button);
         btn.setText(user.getEmail());
+        btnFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), FriendsList.class);
+                startActivity(intent);
+            }
+        });
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Content.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -113,6 +120,7 @@ public class UserActivity extends AppCompatActivity {
                         });
             }
         });
+
     }
 
 }

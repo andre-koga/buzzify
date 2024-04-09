@@ -9,12 +9,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.ui.AppBarConfiguration;
 
+import com.example.spotify_ui.model.Users;
+import com.example.spotify_ui.utils.FirebaseUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,14 +28,13 @@ public class MainActivity extends AppCompatActivity {
     TextView loginRedirectText;
     FirebaseAuth firebaseAuth;
 
+    Users userModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
 
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -82,8 +83,17 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this.getApplicationContext(),
                                         "SignUp unsuccessful: " + task.getException().getMessage(),
                                         Toast.LENGTH_SHORT).show();
+                                String username = signupEmail.getText().toString();
                             } else {
+                                String username = signupEmail.getText().toString();
+                                if(userModel!=null){
+                                    userModel.setUsername(username);
+                                }else{
+                                    userModel = new Users(username, Timestamp.now(), FirebaseUtil.currentUserId());
+                                }
+                                FirebaseUtil.currentUserDetails().set(userModel);
                                 startActivity(new Intent(MainActivity.this, UserActivity.class));
+
                             }
                         }
                     });
@@ -99,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(I);
             }
         });
-
     }
     private boolean passwordMatch(String paswd, String paswd2) {
         return !paswd.equals(paswd2);
