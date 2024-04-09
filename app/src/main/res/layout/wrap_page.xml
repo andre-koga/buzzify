@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/black"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -48,12 +49,26 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:text="Your Wraps"
+            android:textColor="@color/white"
+            android:layout_marginTop="40dp"
+            android:textSize="40dp"
+            android:textAlignment="center"
             tools:layout_editor_absoluteX="162dp"
             tools:layout_editor_absoluteY="321dp" />
-
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:text="Generate your Wrap!"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:background="@drawable/rounded_color">
+        </Button>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
