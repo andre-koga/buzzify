@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_navigation_dashboard_to_navigation_notifications"
             app:destination="@id/navigation_public" />
+        <action
+            android:id="@+id/action_navigation_friends_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
 
     <fragment
