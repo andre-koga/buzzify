@@ -1,23 +1,19 @@
 package com.example.spotify_ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.spotify_ui.LoginActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.Task;
 
 
 public class UserActivity extends AppCompatActivity {
@@ -40,6 +36,8 @@ public class UserActivity extends AppCompatActivity {
         btnLogOut = (Button) findViewById(R.id.btnLogOut);
         btnDelete = (Button) findViewById(R.id.btnDeleteAccount);
         btnResetPassword = (Button) findViewById(R.id.btnResetPassword);
+
+        Intent prevIntent = getIntent();
 
         txtUser = (TextView) findViewById(R.id.txtUser);
         user = firebaseAuth.getCurrentUser();

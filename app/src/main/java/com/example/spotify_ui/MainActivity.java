@@ -1,20 +1,5 @@
 package com.example.spotify_ui;
 
-import android.os.Bundle;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import com.example.spotify_ui.databinding.ActivityMainBinding;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -23,12 +8,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.ui.AppBarConfiguration;
+
+import com.example.spotify_ui.databinding.ActivityMainBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-
     private ActivityMainBinding binding;
 
     private AppBarConfiguration appBarConfiguration;
@@ -37,13 +26,12 @@ public class MainActivity extends AppCompatActivity {
     TextView loginRedirectText;
     FirebaseAuth firebaseAuth;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        //binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(R.layout.activity_main);
 
         firebaseAuth = FirebaseAuth.getInstance();
         signupEmail = findViewById(R.id.edEmail);
@@ -54,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
         final String[] emailID = new String[1];
         final String[] paswd = new String[1];
         final String[] paswd2 = new String[1];
+        if (firebaseAuth.getCurrentUser() != null) {
+            Intent I = new Intent(MainActivity.this, Content.class);
+            startActivity(I);
+        }
 
         //
         btnSignUp.setOnClickListener(new View.OnClickListener() {
@@ -78,19 +70,19 @@ public class MainActivity extends AppCompatActivity {
                 } else if (emailID[0].isEmpty() && paswd[0].isEmpty()) {
                     Toast.makeText(MainActivity.this, "Fields Empty!", Toast.LENGTH_SHORT).show();
                 } else if (!(emailID[0].isEmpty() && paswd[0].isEmpty())) {
-                    firebaseAuth.createUserWithEmailAndPassword(emailID[0], paswd[0]).addOnCompleteListener(MainActivity.this, new OnCompleteListener() {
-                        @Override
-                        public void onComplete(@NonNull Task task) {
+                    firebaseAuth.createUserWithEmailAndPassword(emailID[0], paswd[0])
+                            .addOnCompleteListener(MainActivity.this, new OnCompleteListener() {
+                                @Override
+                                public void onComplete(@NonNull Task task) {
 
-                            if (!task.isSuccessful()) {
-                                Toast.makeText(MainActivity.this.getApplicationContext(),
-                                        "SignUp unsuccessful: " + task.getException().getMessage(),
-                                        Toast.LENGTH_SHORT).show();
-                            } else {
-                                startActivity(new Intent(MainActivity.this, UserActivity.class));
-                            }
-                        }
-                    });
+                                    if (!task.isSuccessful()) {
+                                        Toast.makeText(MainActivity.this.getApplicationContext(),
+                                                "SignUp unsuccessful: " + task.getException().getMessage(),
+                                                Toast.LENGTH_SHORT).show();
+                                    } else {
+                                    }
+                                }
+                            });
                 } else {
                     Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
                 }
@@ -105,8 +97,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
     private boolean passwordMatch(String paswd, String paswd2) {
         return !paswd.equals(paswd2);
     }
 }
-

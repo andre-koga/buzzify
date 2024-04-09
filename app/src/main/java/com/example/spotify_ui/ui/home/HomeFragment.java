@@ -4,21 +4,35 @@ import static com.example.spotify_ui.Visibility.YOU;
 import static com.example.spotify_ui.Wraps.wrap_list;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.spotify_ui.Content;
 import com.example.spotify_ui.R;
 import com.example.spotify_ui.Wraps;
 import com.example.spotify_ui.databinding.FragmentHomeBinding;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class HomeFragment extends Fragment {
@@ -30,8 +44,15 @@ public class HomeFragment extends Fragment {
     public Button dashboardBttn;
     public Button notificationBttn;
 
+    // spotify api
+    private final OkHttpClient mOkHttpClient = new OkHttpClient();
+    private okhttp3.Call mCall;
+    //
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        onGetUserProfileClicked();
+        //Toast.makeText(getActivity(), Content.mAccessToken, Toast.LENGTH_SHORT).show();
         HomeViewModel homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
 
@@ -66,7 +87,6 @@ public class HomeFragment extends Fragment {
     }
 
     public void onViewCreated(@NonNull View view, Bundle SavedInstance) {
-
         homeBttn = view.findViewById(R.id.button2);
         homeBttn.setVisibility(View.VISIBLE);
 
@@ -91,6 +111,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        //Toast.makeText(getActivity(), token, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -100,6 +121,53 @@ public class HomeFragment extends Fragment {
         binding = null;
     }
 
+    // spotify stuff
+    /**
+     * Get user profile
+     * This method will get the user profile using the token
+     */
+    public void onGetUserProfileClicked() {
+        if (Content.mAccessToken == null) {
+            Toast.makeText(getActivity(), "You need to get an access token first!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        // Create a request to get the user profile
+        final Request request = new Request.Builder()
+                .url("https://api.spotify.com/v1/me")
+                .addHeader("Authorization", "Bearer " + Content.mAccessToken)
+                .build();
+
+        cancelCall();
+        mCall = mOkHttpClient.newCall(request);
+
+        mCall.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("HTTP", "Failed to fetch data: " + e);
+                Toast.makeText(getActivity(), "Failed to fetch data, watch Logcat for more details",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try {
+                    final JSONObject jsonObject = new JSONObject(response.body().string());
+                    // IT WORKS!
+                } catch (JSONException e) {
+                    Log.d("JSON", "Failed to parse data: " + e);
+                    Toast.makeText(getActivity(), "Failed to parse data, watch Logcat for more details",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void cancelCall() {
+        if (mCall != null) {
+            mCall.cancel();
+        }
+    }
+    //
 
 }
