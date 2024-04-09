@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        onGetUserProfileClicked();
+        //onGetUserProfileClicked();
         //Toast.makeText(getActivity(), Content.mAccessToken, Toast.LENGTH_SHORT).show();
         HomeViewModel homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
@@ -122,6 +122,10 @@ public class HomeFragment extends Fragment {
     }
 
     // spotify stuff
+    /**
+     * KOGA - I'm going to create the getWrap(initial time, end time) => JSONObject function here.
+     */
+
     /**
      * Get user profile
      * This method will get the user profile using the token
