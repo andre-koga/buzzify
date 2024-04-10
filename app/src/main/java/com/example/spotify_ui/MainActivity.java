@@ -33,10 +33,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
-
-
         firebaseAuth = FirebaseAuth.getInstance();
         signupEmail = findViewById(R.id.edEmail);
         signupPassword = findViewById(R.id.ConfirmPassword);

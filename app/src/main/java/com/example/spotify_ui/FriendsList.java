@@ -29,9 +29,6 @@ public class FriendsList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_activity);
-
-
-        
         searchInput = findViewById(R.id.seach_username_input);
         searchButton = findViewById(R.id.search_user_btn);
         backButton = findViewById(R.id.back_btn);
@@ -50,11 +47,13 @@ public class FriendsList extends AppCompatActivity {
         });
         searchButton.setOnClickListener(v -> {
             String searchTerm = searchInput.getText().toString();
-            if(searchTerm.isEmpty() || searchTerm.length()<3){
+            if (searchTerm.isEmpty() || searchTerm.length()<3){
                 searchInput.setError("Invalid Username");
                 return;
             }
             setupSearchRecyclerView(searchTerm);
+
+
         });
     }
 

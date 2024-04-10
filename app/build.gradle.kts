@@ -59,6 +59,8 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx:24.4.4")
     implementation ("com.google.firebase:firebase-storage-ktx:20.1.0")
     implementation ("com.google.firebase:firebase-messaging-ktx:23.1.2")
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-analytics")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
