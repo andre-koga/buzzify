@@ -21,7 +21,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
-   ;
     private AppBarConfiguration appBarConfiguration;
     public EditText signupEmail, signupPassword, signupPassword2;
     Button btnSignUp;

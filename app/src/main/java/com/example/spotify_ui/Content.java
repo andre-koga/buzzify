@@ -26,7 +26,7 @@ public class Content extends AppCompatActivity {
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     public static final String CLIENT_ID = "c5d5db9b10f6403090a273b1e24bee8a";
     public static final String REDIRECT_URI = "spotifyacc://auth";
-    public static final String[] SCOPE = { "user-read-private user-read-email" };
+    public static final String[] SCOPE = { "user-read-private user-read-email user-top-read" };
     public static final int AUTH_TOKEN_REQUEST_CODE = 0;
     public static final int AUTH_CODE_REQUEST_CODE = 1;
 

@@ -15,6 +15,7 @@ gradle = "8.3.1"
 googleServices = "4.4.1"
 firebaseCrashlyticsGradle = "2.9.9"
 firebaseAuth = "22.3.1"
+firebaseFirestore = "24.11.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -32,6 +33,7 @@ gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "gr
 google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
 firebase-crashlytics-gradle = { group = "com.google.firebase", name = "firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsGradle" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
