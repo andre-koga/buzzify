@@ -12,6 +12,7 @@ public class Users {
     private CollectionReference subCollectionRef;
 
     public Users() {
+
     }
 
     public Users(String username, Timestamp createdTimestamp, String userId) {

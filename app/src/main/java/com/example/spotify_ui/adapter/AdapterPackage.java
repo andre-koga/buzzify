@@ -35,6 +35,7 @@ public class AdapterPackage extends FirestoreRecyclerAdapter<Users, AdapterPacka
         holder.usernameText.setText(model.getUsername());
         if(model.getUserId().equals(currentUserId())){
             holder.usernameText.setText(model.getUsername()+" (Me)");
+            addButton.setVisibility(View.GONE);
         }
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
