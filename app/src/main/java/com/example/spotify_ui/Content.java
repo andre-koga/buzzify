@@ -51,6 +51,7 @@ public class Content extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         btn = v.findViewById(R.id.user_button);
         btn.setText(firebaseAuth.getCurrentUser().getEmail());
+        setContentView(R.layout.content);
 
 
 
@@ -105,7 +106,6 @@ public class Content extends AppCompatActivity {
                     @Override
                     public void run() {
                         Log.d("Test", "onActivity3 is called");
-                        setContentView(R.layout.content);
                         Toast.makeText(Content.this, mAccessToken, Toast.LENGTH_SHORT).show();
                     }
                 });

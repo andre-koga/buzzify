@@ -42,4 +42,5 @@ public class FirebaseUtil {
     public static DocumentReference addFriendtoCollection(Users user) {
         return FirebaseFirestore.getInstance().collection("users").document(currentUserId()).collection("friends").document(user.getUserId());
     }
+
 }
