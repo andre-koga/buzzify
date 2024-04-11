@@ -19,7 +19,6 @@ public class Users {
         this.username = username;
         this.createdTimestamp = createdTimestamp;
         this.userId = userId;
-        this.subCollectionRef = FirebaseUtil.createFriendsCollection();
     }
     public CollectionReference getSubCollectionRef() {
         return subCollectionRef;

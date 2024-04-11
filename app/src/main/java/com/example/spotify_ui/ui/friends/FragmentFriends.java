@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,11 +18,18 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.spotify_ui.Content;
 import com.example.spotify_ui.R;
 import com.example.spotify_ui.Wraps;
+import com.example.spotify_ui.adapter.AdapterPackage;
 import com.example.spotify_ui.databinding.FragmentFriendsBinding;
+import com.example.spotify_ui.model.Users;
+import com.example.spotify_ui.utils.FirebaseUtil;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.Query;
 
 public class FragmentFriends extends Fragment {
 
@@ -29,6 +38,9 @@ public class FragmentFriends extends Fragment {
     public Button dashboardBttn;
     public Button notificationBttn;
     public Button btnFriends;
+    RecyclerView recyclerView;
+
+    AdapterPackage adapter;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         FriendsViewModel friendsViewModel =
@@ -40,6 +52,7 @@ public class FragmentFriends extends Fragment {
         final LinearLayout main = binding.main;
         createWraps();
         return root;
+
     }
 
     public void onViewCreated(@NonNull View view, Bundle SavedInstance) {
@@ -52,7 +65,8 @@ public class FragmentFriends extends Fragment {
 
         notificationBttn = view.findViewById(R.id.button4);
         notificationBttn.setVisibility(View.VISIBLE);
-
+        recyclerView = view.findViewById(R.id.search_user_recycler_view);
+        setupSearchRecyclerView();
         (Content.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,6 +129,17 @@ public class FragmentFriends extends Fragment {
         }
 
 
+
+    }
+    void setupSearchRecyclerView() {
+        Query query = FirebaseUtil.allFriendsCollectionReference();
+        FirestoreRecyclerOptions<Users> options = new FirestoreRecyclerOptions.Builder<Users>()
+                .setQuery(query, Users.class).build();
+
+        adapter = new AdapterPackage(options,getActivity());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
 
     }
 }
