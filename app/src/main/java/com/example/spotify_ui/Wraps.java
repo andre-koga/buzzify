@@ -1,27 +1,15 @@
 package com.example.spotify_ui;
 
-import static androidx.core.content.ContextCompat.startActivity;
-import static com.example.spotify_ui.Visibility.YOU;
-
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-
-import com.example.spotify_ui.ui.home.HomeFragment;
 
 import java.util.ArrayList;
 
@@ -64,12 +52,6 @@ public class Wraps extends Activity {
         Button btn = (Button) ((ViewGroup) view).getChildAt(0);
         View details = ((ViewGroup) view).getChildAt(1);
 
-        TextView instructor = (TextView) ((ViewGroup) details).getChildAt(0);
-        TextView location = (TextView) ((ViewGroup) details).getChildAt(1);
-        TextView time = (TextView) ((ViewGroup) details).getChildAt(2);
-
-        View linear = ((ViewGroup) details).getChildAt(3);
-
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,10 +67,10 @@ public class Wraps extends Activity {
 //                fragmentTransaction.commit();
             }
         });
-
-        instructor.setText("Instructor: " + (wrap.getArtists()));
-        location.setText("Location: " + wrap.getUser());
-        time.setText("Date/Time: " + wrap.getWrap_name());
+//
+//        instructor.setText("Instructor: " + (wrap.getArtists()));
+//        location.setText("Location: " + wrap.getUser());
+//        time.setText("Date/Time: " + wrap.getWrap_name());
 
         main.addView(view);
     }
