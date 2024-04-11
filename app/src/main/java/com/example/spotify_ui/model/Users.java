@@ -2,7 +2,6 @@ package com.example.spotify_ui.model;
 
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
-import com.example.spotify_ui.utils.FirebaseUtil;
 
 
 public class Users {
