@@ -2,7 +2,6 @@ package com.example.spotify_ui.model;
 
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
-import com.example.spotify_ui.utils.FirebaseUtil;
 
 
 public class Users {
@@ -19,7 +18,6 @@ public class Users {
         this.username = username;
         this.createdTimestamp = createdTimestamp;
         this.userId = userId;
-        this.subCollectionRef = FirebaseUtil.createFriendsCollection();
     }
     public CollectionReference getSubCollectionRef() {
         return subCollectionRef;

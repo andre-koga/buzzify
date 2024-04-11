@@ -4,7 +4,6 @@ package com.example.spotify_ui;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -36,7 +35,9 @@ public class Content extends AppCompatActivity {
     //
     private AppBarConfiguration appBarConfiguration;
 
-    public static Button btn;
+    private static Button btn;
+
+
     FirebaseAuth firebaseAuth;
 
     @Override
@@ -51,6 +52,7 @@ public class Content extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         btn = v.findViewById(R.id.user_button);
         btn.setText(firebaseAuth.getCurrentUser().getEmail());
+        setContentView(R.layout.content);
 
 
 
@@ -104,8 +106,8 @@ public class Content extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.d("Test", "onActivity3 is called");
-                        setContentView(R.layout.content);
+
+
                         Toast.makeText(Content.this, mAccessToken, Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -142,10 +144,18 @@ public class Content extends AppCompatActivity {
             return Uri.parse(REDIRECT_URI);
         }
 
+        public static Button getButton() {
+            return btn;
+        }
+
         @Override
         protected void onDestroy () {
             super.onDestroy();
         }
+
+//        public void clearUserInformation() {
+//            AuthorizationClient.clearCookies(this);
+//        }
         //
 
 
