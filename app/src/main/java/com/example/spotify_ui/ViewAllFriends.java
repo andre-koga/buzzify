@@ -76,10 +76,7 @@ public class ViewAllFriends extends Fragment {
 
     void setupSearchRecyclerView(String searchTerm){
 
-        Query query = FirebaseUtil.allUserCollectionReference()
-                .whereGreaterThanOrEqualTo("username",searchTerm)
-                .whereLessThanOrEqualTo("username",searchTerm+'\uf8ff');
-
+        Query query = FirebaseUtil.allFriendsCollectionReference();
         FirestoreRecyclerOptions<Users> options = new FirestoreRecyclerOptions.Builder<Users>()
                 .setQuery(query, Users.class).build();
 

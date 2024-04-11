@@ -35,7 +35,7 @@ public class Content extends AppCompatActivity {
     //
     private AppBarConfiguration appBarConfiguration;
 
-    private static Button btn;
+    static Button btn;
 
 
     FirebaseAuth firebaseAuth;
