@@ -75,15 +75,13 @@ public class HomeFragment extends Fragment {
                 Wraps wrap = new Wraps(YOU, "a", "z", "L");
                 wrap_list.add(wrap);
                 wrap.createWidget(main, wrap, HomeFragment.this);
+                onMakeWrap(TimeFrame.short_term);
             }
 
         });
 
 
         return root;
-
-
-
     }
 
     public void onViewCreated(@NonNull View view, Bundle SavedInstance) {
@@ -114,17 +112,66 @@ public class HomeFragment extends Fragment {
         //Toast.makeText(getActivity(), token, Toast.LENGTH_SHORT).show();
     }
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
 
+    public void WrapDone(JSONObject result) {
+        Log.d("JSONOBJECT", result.toString());
+    }
+
     // spotify stuff
     /**
      * KOGA - I'm going to create the getWrap(initial time, end time) => JSONObject function here.
      */
+    public enum TimeFrame {
+        short_term, medium_term, long_term
+    }
+
+    public void onMakeWrap(TimeFrame timeFrame) {
+        if (Content.mAccessToken == null) {
+            Toast.makeText(getActivity(), "You need to get an access token first!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String term = "medium_term";
+        if (timeFrame == TimeFrame.long_term) {
+            term = "long_term";
+        } else if (timeFrame == TimeFrame.short_term) {
+            term = "short_term";
+        }
+
+        // Create a request to get the user profile
+        final Request request = new Request.Builder()
+                .url("https://api.spotify.com/v1/me/top/tracks?time_range=" + term)
+                .addHeader("Authorization", "Bearer " + Content.mAccessToken)
+                .build();
+
+        cancelCall();
+        mCall = mOkHttpClient.newCall(request);
+
+        mCall.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("HTTP", "Failed to fetch data: " + e);
+                Toast.makeText(getActivity(), "Failed to fetch data, watch Logcat for more details",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try {
+                    WrapDone(new JSONObject(response.body().string()));
+                } catch (JSONException e) {
+                    Log.d("JSON", "Failed to parse data: " + e);
+                    Toast.makeText(getActivity(), "Failed to parse data, watch Logcat for more details",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 
     /**
      * Get user profile
