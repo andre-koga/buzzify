@@ -16,7 +16,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-
+        manifestPlaceholders["redirectSchemeName"] = "spotifyacc"
+        manifestPlaceholders["redirectHostName"] = "auth"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -42,6 +43,9 @@ android {
 }
 
 dependencies {
+
+    implementation("com.spotify.android:auth:2.1.1")
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
 
     implementation(libs.appcompat)
     implementation(libs.material)

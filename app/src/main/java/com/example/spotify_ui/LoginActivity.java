@@ -86,7 +86,8 @@ public class LoginActivity extends AppCompatActivity {
                             if (!task.isSuccessful()) {
                                 Toast.makeText(LoginActivity.this, "Not sucessfull", Toast.LENGTH_SHORT).show();
                             } else {
-                                startActivity(new Intent(LoginActivity.this, Content.class));
+                                Intent i = (new Intent(LoginActivity.this, Content.class));
+                                startActivity(i);
                             }
                         }
                     });

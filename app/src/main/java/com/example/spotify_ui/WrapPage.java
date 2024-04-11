@@ -1,25 +1,17 @@
 package com.example.spotify_ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-
-import com.example.spotify_ui.databinding.FragmentHomeBinding;
-import com.example.spotify_ui.ui.home.HomeViewModel;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+
+import com.example.spotify_ui.ui.home.HomeViewModel;
 
 public class WrapPage extends Fragment {
 
@@ -48,6 +40,12 @@ public class WrapPage extends Fragment {
         notificationBttn = view.findViewById(R.id.button4);
         notificationBttn.setVisibility(View.VISIBLE);
 
+        (Content.btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(WrapPage.this).navigate(R.id.action_navigation_wrap_page_to_navigation_user_activity);;
+            }
+        });
         homeBttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

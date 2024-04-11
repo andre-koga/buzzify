@@ -69,6 +69,7 @@
             android:padding="4dp"
             android:src="@drawable/icon_search" />
 
+
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -76,19 +77,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/search_user_layout"
-        android:background="@color/spotifyGreen"
+        android:background="@color/black"
         android:padding="10dp" />
 
 
+
 </RelativeLayout>
-
-
-
-
-
-
-
-
-
-
-

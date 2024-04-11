@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                                     userModel = new Users(username, Timestamp.now(), FirebaseUtil.currentUserId());
                                 }
                                 FirebaseUtil.currentUserDetails().set(userModel);
-                                startActivity(new Intent(MainActivity.this, UserActivity.class));
+                                startActivity(new Intent(MainActivity.this, Content.class));
 
                             }
                         }

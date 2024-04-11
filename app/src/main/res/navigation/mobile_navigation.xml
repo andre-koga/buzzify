@@ -4,6 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_home">
+    <fragment
+        android:id="@+id/navigation_user_activity"
+        android:name="com.example.spotify_ui.UserActivity"
+        android:label="OpenUserActivity">
+        <action
+            android:id="@+id/action_navigation_activity_user_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_home"
@@ -19,6 +27,10 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_notifications"
             app:destination="@id/navigation_public" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_user_activity"
+            app:destination="@id/navigation_user_activity" />
+
     </fragment>
 
     <fragment
@@ -27,11 +39,17 @@
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_friends" >
         <action
+            android:id="@+id/action_navigation_friends_to_navigation_friends_list"
+            app:destination="@id/navigation_friends_list"/>
+        <action
             android:id="@+id/action_navigation_dashboard_to_navigation_home"
             app:destination="@id/navigation_home" />
         <action
             android:id="@+id/action_navigation_dashboard_to_navigation_notifications"
             app:destination="@id/navigation_public" />
+        <action
+            android:id="@+id/action_navigation_friends_to_navigation_user_activity"
+            app:destination="@id/navigation_user_activity" />
     </fragment>
 
     <fragment
@@ -45,6 +63,9 @@
         <action
             android:id="@+id/action_navigation_notifications_to_navigation_dashboard"
             app:destination="@id/navigation_friends" />
+        <action
+            android:id="@+id/action_navigation_public_to_navigation_user_activity"
+            app:destination="@id/navigation_user_activity" />
     </fragment>
 
     <fragment
@@ -60,5 +81,21 @@
         <action
             android:id="@+id/action_navigation_wrap_page_to_navigation_notifications"
             app:destination="@id/navigation_public" />
+        <action
+            android:id="@+id/action_navigation_wrap_page_to_navigation_user_activity"
+            app:destination="@id/navigation_user_activity" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_friends_list"
+        android:name="com.example.spotify_ui.FriendsList"
+        android:label="OpenFriendsList">
+        <action
+            android:id="@+id/action_navigation_friends_list_to_navigation_friends"
+            app:destination="@id/navigation_friends" />
+        <action
+            android:id="@+id/action_navigation_friends_list_to_navigation_user_activity"
+            app:destination="@id/navigation_user_activity" />
     </fragment>
 </navigation>

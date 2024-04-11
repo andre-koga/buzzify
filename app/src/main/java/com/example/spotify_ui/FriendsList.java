@@ -1,14 +1,17 @@
 package com.example.spotify_ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.spotify_ui.adapter.AdapterPackage;
 import com.example.spotify_ui.model.Users;
@@ -16,7 +19,7 @@ import com.example.spotify_ui.utils.FirebaseUtil;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 
-public class FriendsList extends AppCompatActivity {
+public class FriendsList extends Fragment {
 
     EditText searchInput;
     ImageButton searchButton;
@@ -26,16 +29,24 @@ public class FriendsList extends AppCompatActivity {
     AdapterPackage adapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search_activity);
+        View v = inflater.inflate(R.layout.search_activity, container, false);
+
+        (Content.btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(FriendsList.this).navigate(R.id.action_navigation_friends_list_to_navigation_user_activity);;
+            }
+        });
 
 
         
-        searchInput = findViewById(R.id.seach_username_input);
-        searchButton = findViewById(R.id.search_user_btn);
-        backButton = findViewById(R.id.back_btn);
-        recyclerView = findViewById(R.id.search_user_recycler_view);
+        searchInput = v.findViewById(R.id.seach_username_input);
+        searchButton = v.findViewById(R.id.search_user_btn);
+        backButton = v.findViewById(R.id.back_btn);
+        recyclerView = v.findViewById(R.id.search_user_recycler_view);
 
         searchInput.requestFocus();
 
@@ -43,12 +54,10 @@ public class FriendsList extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Content.class);
-                startActivity(intent);
-                finish();
+                NavHostFragment.findNavController(FriendsList.this).navigate(R.id.action_navigation_friends_list_to_navigation_friends);
             }
         });
-        searchButton.setOnClickListener(v -> {
+        searchButton.setOnClickListener(vi -> {
             String searchTerm = searchInput.getText().toString();
             if(searchTerm.isEmpty() || searchTerm.length()<3){
                 searchInput.setError("Invalid Username");
@@ -56,6 +65,7 @@ public class FriendsList extends AppCompatActivity {
             }
             setupSearchRecyclerView(searchTerm);
         });
+        return v;
     }
 
     void setupSearchRecyclerView(String searchTerm){
@@ -67,33 +77,33 @@ public class FriendsList extends AppCompatActivity {
         FirestoreRecyclerOptions<Users> options = new FirestoreRecyclerOptions.Builder<Users>()
                 .setQuery(query, Users.class).build();
 
-        adapter = new AdapterPackage(options,getApplicationContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new AdapterPackage(options,getActivity());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         adapter.startListening();
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if(adapter!=null)
-            adapter.startListening();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if(adapter!=null)
-            adapter.stopListening();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(adapter!=null)
-            adapter.startListening();
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        if(adapter!=null)
+//            adapter.startListening();
+//    }
+//
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        if(adapter!=null)
+//            adapter.stopListening();
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        if(adapter!=null)
+//            adapter.startListening();
+//    }
 }
 
 
