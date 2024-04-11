@@ -9,27 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.spotify_ui.Content;
 import com.example.spotify_ui.R;
 import com.example.spotify_ui.Wraps;
-import com.example.spotify_ui.adapter.AdapterPackage;
 import com.example.spotify_ui.databinding.FragmentFriendsBinding;
-import com.example.spotify_ui.model.Users;
-import com.example.spotify_ui.utils.FirebaseUtil;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.Query;
 
 public class FragmentFriends extends Fragment {
 
@@ -38,9 +28,6 @@ public class FragmentFriends extends Fragment {
     public Button dashboardBttn;
     public Button notificationBttn;
     public Button btnFriends;
-    RecyclerView recyclerView;
-
-    AdapterPackage adapter;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         FriendsViewModel friendsViewModel =
@@ -52,7 +39,6 @@ public class FragmentFriends extends Fragment {
         final LinearLayout main = binding.main;
         createWraps();
         return root;
-
     }
 
     public void onViewCreated(@NonNull View view, Bundle SavedInstance) {
@@ -65,9 +51,8 @@ public class FragmentFriends extends Fragment {
 
         notificationBttn = view.findViewById(R.id.button4);
         notificationBttn.setVisibility(View.VISIBLE);
-        recyclerView = view.findViewById(R.id.search_user_recycler_view);
-        setupSearchRecyclerView();
-        (Content.btn).setOnClickListener(new View.OnClickListener() {
+
+        (Content.getButton()).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(FragmentFriends.this).navigate(R.id.action_navigation_friends_to_navigation_user_activity);;
@@ -113,15 +98,7 @@ public class FragmentFriends extends Fragment {
                 View view = LayoutInflater.from(main.getContext()).inflate(R.layout.wrap_widget, null, false);
                 View details = ((ViewGroup) view).getChildAt(1);
 
-                TextView instructor = (TextView) ((ViewGroup) details).getChildAt(0);
-                TextView location = (TextView) ((ViewGroup) details).getChildAt(1);
-                TextView time = (TextView) ((ViewGroup) details).getChildAt(2);
 
-                View linear = ((ViewGroup) details).getChildAt(3);
-
-                instructor.setText("Instructor: " + (wrap.getArtists()));
-                location.setText("Location: " + wrap.getUser());
-                time.setText("Date/Time: " + wrap.getWrap_name());
                 main.addView(view);
             } else {
                 continue;
@@ -129,17 +106,6 @@ public class FragmentFriends extends Fragment {
         }
 
 
-
-    }
-    void setupSearchRecyclerView() {
-        Query query = FirebaseUtil.allFriendsCollectionReference();
-        FirestoreRecyclerOptions<Users> options = new FirestoreRecyclerOptions.Builder<Users>()
-                .setQuery(query, Users.class).build();
-
-        adapter = new AdapterPackage(options,getActivity());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(adapter);
-        adapter.startListening();
 
     }
 }
