@@ -1,6 +1,7 @@
 
 package com.example.spotify_ui.utils;
 
+import com.example.spotify_ui.Wraps;
 import com.example.spotify_ui.model.Users;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -41,5 +42,11 @@ public class FirebaseUtil {
 
     public static DocumentReference addFriendtoCollection(Users user) {
         return FirebaseFirestore.getInstance().collection("users").document(currentUserId()).collection("friends").document(user.getUserId());
+    }
+    public static DocumentReference addWraptoCollection(Wraps wrap) {
+        return FirebaseFirestore.getInstance().collection("users").document(currentUserId()).collection("wraps").document(wrap.getWrap_name());
+    }
+    public static CollectionReference getAllWraps() {
+        return FirebaseFirestore.getInstance().collection("users").document(currentUserId()).collection("wraps");
     }
 }

@@ -11,9 +11,14 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.spotify_ui.model.Users;
+import com.example.spotify_ui.utils.FirebaseUtil;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.Query;
+
 import java.util.ArrayList;
 
-public class Wraps extends Activity {
+public class Wraps {
     public static ArrayList<Wraps> wrap_list = new ArrayList<>(0);
     private final Visibility visible;
 
@@ -21,11 +26,16 @@ public class Wraps extends Activity {
 
     private final String wrap_name;
     private final String artists;
-
+    public Wraps() {
+        this.visible = Visibility.FRIENDS;
+        this.user = "";
+        this.wrap_name = "";
+        this.artists = "";
+    }
     public Wraps(Visibility visible, String user, String wrap_name, String artists) {
         this.visible = visible;
         this.user = user;
-        this.wrap_name = wrap_name;
+        this.wrap_name = Double.toString(Math.random());
         this.artists = artists;
     }
 
@@ -45,8 +55,6 @@ public class Wraps extends Activity {
         return artists;
     }
 
-
-
     public void createWidget(LinearLayout main, Wraps wrap, Fragment frag) {
         View view = LayoutInflater.from(main.getContext()).inflate(R.layout.wrap_widget,null, false);
         Button btn = (Button) ((ViewGroup) view).getChildAt(0);
@@ -58,16 +66,10 @@ public class Wraps extends Activity {
             public void onClick(View v) {
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.navigation_wrap_page);
-////                NavHostFragment.findNavController(new WrapPage()).navigate(R.id.navigation_wrap_page);
-//                Fragment fragment = new WrapPage();
-//                FragmentManager fragmentManager = frag.getActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//
-//                fragmentTransaction.replace(R.id.container, fragment);
-//                fragmentTransaction.addToBackStack("returnable");
-//                fragmentTransaction.commit();
+                FirebaseUtil.addWraptoCollection(wrap).set(wrap);
             }
         });
+
 
 //        instructor.setText("Instructor: " + (wrap.getArtists()));
 //        location.setText("Location: " + wrap.getUser());
@@ -75,4 +77,5 @@ public class Wraps extends Activity {
 
         main.addView(view);
     }
+
 }

@@ -24,6 +24,11 @@ import com.example.spotify_ui.Content;
 import com.example.spotify_ui.R;
 import com.example.spotify_ui.Wraps;
 import com.example.spotify_ui.databinding.FragmentHomeBinding;
+import com.example.spotify_ui.utils.FirebaseUtil;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,7 +71,9 @@ public class HomeFragment extends Fragment {
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         final Button generate = binding.generateWraps;
         final LinearLayout main = binding.main;
+        populateWrapList();
         for (int i = 0; i < wrap_list.size(); i++) {
+            Log.d("hi",wrap_list.get(i).getWrap_name());
             Wraps wrap = wrap_list.get(i);
             wrap.createWidget(main, wrap, HomeFragment.this);
         }
@@ -77,6 +84,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Wraps wrap = new Wraps(YOU, "a", "z", "L");
                 wrap_list.add(wrap);
+                FirebaseUtil.addWraptoCollection(wrap).set(wrap);
                 wrap.createWidget(main, wrap, HomeFragment.this);
             }
 
@@ -236,6 +244,18 @@ public class HomeFragment extends Fragment {
     }
     //
 
-
+    public void populateWrapList() {
+        CollectionReference wrapsCollectionRef = FirebaseUtil.getAllWraps();
+        wrapsCollectionRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (DocumentSnapshot document : task.getResult()) {
+                    Wraps wrap = document.toObject(Wraps.class);
+                    wrap_list.add(wrap);
+                }
+            } else {
+                Log.d("TAG", "Error getting wraps: ", task.getException());
+            }
+        });
+    }
 
 }
