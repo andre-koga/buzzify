@@ -34,7 +34,7 @@ public class FriendsList extends Fragment {
         super.onCreate(savedInstanceState);
         View v = inflater.inflate(R.layout.search_activity, container, false);
 
-        (Content.getButton()).setOnClickListener(new View.OnClickListener() {
+        (Content.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(FriendsList.this).navigate(R.id.action_navigation_friends_list_to_navigation_user_activity);;

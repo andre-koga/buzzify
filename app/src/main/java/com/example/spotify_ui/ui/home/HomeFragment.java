@@ -4,7 +4,6 @@ package com.example.spotify_ui.ui.home;
 import static com.example.spotify_ui.Visibility.YOU;
 import static com.example.spotify_ui.Wraps.wrap_list;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -100,8 +99,7 @@ public class HomeFragment extends Fragment {
         notificationBttn = view.findViewById(R.id.button4);
         notificationBttn.setVisibility(View.VISIBLE);
 
-        Activity activity = getActivity();
-        (Content.getButton()).setOnClickListener(new View.OnClickListener() {
+        (Content.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.action_navigation_home_to_navigation_user_activity);;
@@ -136,60 +134,15 @@ public class HomeFragment extends Fragment {
     }
 
 
-    public void WrapDone(JSONObject result) {
-        Log.d("JSONOBJECT", result.toString());
-    }
-
     // spotify stuff
     /**
      * KOGA - I'm going to create the getWrap(initial time, end time) => JSONObject function here.
      */
-    public enum TimeFrame {
-        short_term, medium_term, long_term
-    }
 
-    public void onMakeWrap(TimeFrame timeFrame) {
-        if (Content.mAccessToken == null) {
-            Toast.makeText(getActivity(), "You need to get an access token first!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        String term = "medium_term";
-        if (timeFrame == TimeFrame.long_term) {
-            term = "long_term";
-        } else if (timeFrame == TimeFrame.short_term) {
-            term = "short_term";
-        }
-
-        // Create a request to get the user profile
-        final Request request = new Request.Builder()
-                .url("https://api.spotify.com/v1/me/top/tracks?time_range=" + term)
-                .addHeader("Authorization", "Bearer " + Content.mAccessToken)
-                .build();
-
-        cancelCall();
-        mCall = mOkHttpClient.newCall(request);
-
-        mCall.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.d("HTTP", "Failed to fetch data: " + e);
-                Toast.makeText(getActivity(), "Failed to fetch data, watch Logcat for more details",
-                        Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                try {
-                    WrapDone(new JSONObject(response.body().string()));
-                } catch (JSONException e) {
-                    Log.d("JSON", "Failed to parse data: " + e);
-                    Toast.makeText(getActivity(), "Failed to parse data, watch Logcat for more details",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
+    /**
+     * Get user profile
+     * This method will get the user profile using the token
+     */
     public void onGetUserProfileClicked() {
         if (Content.mAccessToken == null) {
             Toast.makeText(getActivity(), "You need to get an access token first!", Toast.LENGTH_SHORT).show();

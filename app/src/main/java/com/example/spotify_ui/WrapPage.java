@@ -40,7 +40,7 @@ public class WrapPage extends Fragment {
         notificationBttn = view.findViewById(R.id.button4);
         notificationBttn.setVisibility(View.VISIBLE);
 
-        (Content.getButton()).setOnClickListener(new View.OnClickListener() {
+        (Content.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(WrapPage.this).navigate(R.id.action_navigation_wrap_page_to_navigation_user_activity);;

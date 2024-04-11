@@ -3,231 +3,56 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/black">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/spotifyGreen"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/spotifyGreen">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:background="@color/spotifyGreen"
+            android:layout_weight="1"
             android:text="Home" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:background="@color/spotifyGreen"
+            android:layout_weight="1"
             android:text="Friends" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:background="@color/spotifyGreen"
+            android:layout_weight="1"
             android:text="Public" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="40dp"
-        android:layout_marginStart="40dp"
-        android:background="@color/purpleSpotify"
         android:orientation="vertical"
-        android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_editor_absoluteY="40dp"
-        tools:layout_editor_absoluteY="40dp">
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="2dp">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Summer NYC"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="40dp">
-        </TextView>
-        <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintRight_toLeftOf="parent">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Top Songs:"
-                    android:textColor="@color/white"
-                    android:textSize="20dp">
-                </TextView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1."
-                    android:textColor="@color/white"
-                    android:textSize="20dp">
-                </TextView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2."
-                    android:textColor="@color/white"
-                    android:textSize="20dp">
-                </TextView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="3."
-                    android:textColor="@color/white"
-                    android:textSize="20dp">
-                </TextView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="4."
-                    android:textColor="@color/white"
-                    android:textSize="20dp">
-                </TextView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="5."
-                    android:textColor="@color/white"
-                    android:textSize="20dp">
-                </TextView>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Top Artists:"
-                    android:textColor="@color/white"
-                    android:textSize="20dp">
-                </TextView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1."
-                    android:textColor="@color/white"
-                    android:textSize="20dp">
-                </TextView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2."
-                    android:textColor="@color/white"
-                    android:textSize="20dp">
-                </TextView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="3."
-                    android:textColor="@color/white"
-                    android:textSize="20dp">
-                </TextView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="4."
-                    android:textColor="@color/white"
-                    android:textSize="20dp">
-                </TextView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="5."
-                    android:textColor="@color/white"
-                    android:textSize="20dp">
-                </TextView>
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintRight_toLeftOf="parent">
-            <LinearLayout
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:textColor="@color/white"
-                    android:text="Listening Time:">
-                </TextView>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="35dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:text="800.116">
-                </TextView>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:textColor="@color/white"
-                    android:text="Top Genre:">
-                </TextView>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="35dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:text="HipHop">
-                </TextView>
-            </LinearLayout>
-        </LinearLayout>
-
+            android:text="TextView"
+            tools:layout_editor_absoluteX="162dp"
+            tools:layout_editor_absoluteY="321dp" />
 
     </LinearLayout>
 
