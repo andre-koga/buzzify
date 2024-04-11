@@ -24,7 +24,7 @@
                 android:layout_margin="20dp"
                 android:layout_marginBottom="10dp"
                 android:text="@string/your_wraps"
-                android:textAlignment="viewStart"
+                android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="50sp"
                 android:textStyle="bold"

@@ -64,31 +64,30 @@ public class Wraps extends Activity {
         Button btn = (Button) ((ViewGroup) view).getChildAt(0);
         View details = ((ViewGroup) view).getChildAt(1);
 
-        TextView instructor = (TextView) ((ViewGroup) details).getChildAt(0);
-        TextView location = (TextView) ((ViewGroup) details).getChildAt(1);
-        TextView time = (TextView) ((ViewGroup) details).getChildAt(2);
+        TextView likes_count = (TextView) ((ViewGroup) details).getChildAt(0);
+        TextView username = (TextView) ((ViewGroup) details).getChildAt(1);
 
-        View linear = ((ViewGroup) details).getChildAt(3);
+//        View linear = ((ViewGroup) details).getChildAt(3);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.navigation_wrap_page);
-////                NavHostFragment.findNavController(new WrapPage()).navigate(R.id.navigation_wrap_page);
-//                Fragment fragment = new WrapPage();
-//                FragmentManager fragmentManager = frag.getActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//
-//                fragmentTransaction.replace(R.id.container, fragment);
-//                fragmentTransaction.addToBackStack("returnable");
-//                fragmentTransaction.commit();
+//                NavHostFragment.findNavController(new WrapPage()).navigate(R.id.navigation_wrap_page);
+                Fragment fragment = new WrapPage();
+                FragmentManager fragmentManager = frag.getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                fragmentTransaction.replace(R.id.container, fragment);
+                fragmentTransaction.addToBackStack("returnable");
+                fragmentTransaction.commit();
             }
         });
-
-        instructor.setText("Instructor: " + (wrap.getArtists()));
-        location.setText("Location: " + wrap.getUser());
-        time.setText("Date/Time: " + wrap.getWrap_name());
+//
+//        instructor.setText("Instructor: " + (wrap.getArtists()));
+//        location.setText("Location: " + wrap.getUser());
+//        time.setText("Date/Time: " + wrap.getWrap_name());
 
         main.addView(view);
     }
