@@ -17,12 +17,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Wraps {
-
-
-
-
-
-
     public static void createNewWidget(LinearLayout main, String title, String timeFrame) {
         View view = LayoutInflater.from(main.getContext()).inflate(R.layout.wrap_widget,null, false);
         Button btn = (Button) ((ViewGroup) view).getChildAt(0);

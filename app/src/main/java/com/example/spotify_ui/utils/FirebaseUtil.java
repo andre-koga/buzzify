@@ -6,6 +6,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.Timestamp;
 
 public class FirebaseUtil {
 
@@ -47,6 +48,9 @@ public class FirebaseUtil {
     }
     public static DocumentReference addOtherFriendtoCollection(Users user) {
         return FirebaseFirestore.getInstance().collection("users").document(user.getUserId()).collection("friends").document(currentUserId());
+    }
+    public static DocumentReference addUsernametoCollection(Users user) {
+        return FirebaseFirestore.getInstance().collection("users").document(user.getUserId()).collection("friends").document(FirebaseFirestore.getInstance().collection("users").document("username").toString());
     }
     public static  DocumentReference addWraptoCollection(String timeFrame) {
 

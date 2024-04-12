@@ -3,7 +3,6 @@
 package com.example.spotify_ui.ui.friends;
 
 import static com.example.spotify_ui.Visibility.YOU;
-import static com.example.spotify_ui.Wraps.wrap_list;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,7 +28,7 @@ import com.example.spotify_ui.utils.FirebaseUtil;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 
-public class FragmentFriends extends Fragment {
+public class  FragmentFriends extends Fragment {
 
     private FragmentFriendsBinding binding;
     public Button homeBttn;

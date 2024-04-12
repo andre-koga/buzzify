@@ -1,6 +1,8 @@
 
 package com.example.spotify_ui.adapter;
 
+import static com.example.spotify_ui.utils.FirebaseUtil.addOtherFriendtoCollection;
+import static com.example.spotify_ui.utils.FirebaseUtil.addUsernametoCollection;
 import static com.example.spotify_ui.utils.FirebaseUtil.currentUserId;
 
 import android.content.Context;
@@ -23,6 +25,8 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.Timestamp;
 
+import java.sql.Time;
+
 public class AdapterPackage extends FirestoreRecyclerAdapter<Users, AdapterPackage.UserModelViewHolder> {
 
     Context context;
@@ -44,7 +48,11 @@ public class AdapterPackage extends FirestoreRecyclerAdapter<Users, AdapterPacka
             @Override
             public void onClick(View v) {
                 FirebaseUtil.addFriendtoCollection(model).set(model);
-                FirebaseUtil.addOtherFriendtoCollection(model).set(MainActivity.userModel);
+                try {
+                    FirebaseUtil.addOtherFriendtoCollection(model).set(new Users(addUsernametoCollection(model).toString(), Timestamp.now(), currentUserId()));
+                } catch (NullPointerException e) {
+
+                }
             }
         });
     }
