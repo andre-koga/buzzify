@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:layout_marginTop="20dp"
-
+        android:background="@drawable/rounded_color"
         android:orientation="vertical"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,13 +23,14 @@
             android:id="@+id/back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_color"
             android:text="Return"
             android:textColor="@color/white"/>
 
         <ImageView
             android:id="@+id/top_artist_image"
             android:layout_width="270dp"
-            android:layout_height="150dp"
+            android:layout_height="270dp"
             android:layout_marginStart="40dp"
             android:background="@color/white"/>
 
