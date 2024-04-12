@@ -50,6 +50,9 @@ public class FirebaseUtil {
 
         return FirebaseFirestore.getInstance().collection("users").document(currentUserId()).collection("wraps").document(timeFrame);
     }
+    public static CollectionReference getAllWraps() {
+        return FirebaseFirestore.getInstance().collection("users").document(currentUserId()).collection("wraps");
+    }
 
 
 }

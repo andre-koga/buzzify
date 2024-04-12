@@ -15,6 +15,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.spotify_ui.ui.home.HomeViewModel;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +34,10 @@ public class WrapPage extends Fragment {
 
     private JSONObject artistJSON;
     private JSONObject trackJSON;
+
+    private String artists;
+
+    private String tracks;
     private String title;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -36,53 +45,113 @@ public class WrapPage extends Fragment {
         String artistString = getArguments().getString("artist");
         String trackString = getArguments().getString("track");
         title = getArguments().getString("title");
-
-
-        try {
-            artistJSON = new JSONObject(artistString);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            trackJSON = new JSONObject(trackString);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-
-        Log.d("ARTIST", artistString);
-        Log.d("TRACK", trackString);
-
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-
         View view = inflater.inflate(R.layout.wrap_page, container,
                 false);
+        CollectionReference userWraps = FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getUid()).collection("wraps");
+        Task<DocumentSnapshot> indSnapShot = userWraps.document("short_term").get();
+        indSnapShot.addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot indDoc = indSnapShot.getResult();
+                artists = (String) indDoc.get("Artists");
+                tracks = (String) indDoc.get("Tracks");
+                Log.d("AIDS", "aids");
+                try {
+                    artistJSON = new JSONObject(artists);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                try {
+                    trackJSON = new JSONObject(tracks);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
 
+                Log.d("ARTIST", artists);
+                Log.d("TRACK", tracks);
+
+
+                ((TextView) view.findViewById(R.id.title)).setText(title);
+
+                try {
+
+                    JSONArray songArray = trackJSON.getJSONArray("items");
+                    ((TextView) view.findViewById(R.id.song_1)).setText(songArray.getJSONObject(0).getString("name"));
+                    ((TextView) view.findViewById(R.id.song_2)).setText(songArray.getJSONObject(1).getString("name"));
+                    ((TextView) view.findViewById(R.id.song_3)).setText(songArray.getJSONObject(2).getString("name"));
+                    ((TextView) view.findViewById(R.id.song_4)).setText(songArray.getJSONObject(3).getString("name"));
+                    ((TextView) view.findViewById(R.id.song_5)).setText(songArray.getJSONObject(4).getString("name"));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+                try {
+                    JSONArray artistArray = artistJSON.getJSONArray("items");
+                    ((TextView) view.findViewById(R.id.artist_1)).setText(artistArray.getJSONObject(0).getString("name"));
+                    ((TextView) view.findViewById(R.id.artist_2)).setText(artistArray.getJSONObject(1).getString("name"));
+                    ((TextView) view.findViewById(R.id.artist_3)).setText(artistArray.getJSONObject(2).getString("name"));
+                    ((TextView) view.findViewById(R.id.artist_4)).setText(artistArray.getJSONObject(3).getString("name"));
+                    ((TextView) view.findViewById(R.id.artist_5)).setText(artistArray.getJSONObject(4).getString("name"));
+
+                    ((TextView) view.findViewById(R.id.top_genre)).setText(artistArray.getJSONObject(0).getJSONArray("genres").get(0).toString());
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                Log.d("This is stupid", "Stupid");
+            }
+        });
+
+
+
+
+
+
+
+//        try {
+//            artistJSON = new JSONObject(artists);
+//        } catch (JSONException e) {
+//            throw new RuntimeException(e);
+//        }
+//        try {
+//            trackJSON = new JSONObject(tracks);
+//        } catch (JSONException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        Log.d("ARTIST", artists);
+//        Log.d("TRACK", tracks);
+//
+
+//
+//        try {
+//
+//            JSONArray songArray = trackJSON.getJSONArray("items");
+//            ((TextView) view.findViewById(R.id.song_1)).setText(songArray.getJSONObject(0).getString("name"));
+//            ((TextView) view.findViewById(R.id.song_2)).setText(songArray.getJSONObject(1).getString("name"));
+//            ((TextView) view.findViewById(R.id.song_3)).setText(songArray.getJSONObject(2).getString("name"));
+//            ((TextView) view.findViewById(R.id.song_4)).setText(songArray.getJSONObject(3).getString("name"));
+//            ((TextView) view.findViewById(R.id.song_5)).setText(songArray.getJSONObject(4).getString("name"));
+//        } catch (JSONException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        try {
+//            JSONArray artistArray = artistJSON.getJSONArray("items");
+//            ((TextView) view.findViewById(R.id.artist_1)).setText(artistArray.getJSONObject(0).getString("name"));
+//            ((TextView) view.findViewById(R.id.artist_2)).setText(artistArray.getJSONObject(1).getString("name"));
+//            ((TextView) view.findViewById(R.id.artist_3)).setText(artistArray.getJSONObject(2).getString("name"));
+//            ((TextView) view.findViewById(R.id.artist_4)).setText(artistArray.getJSONObject(3).getString("name"));
+//            ((TextView) view.findViewById(R.id.artist_5)).setText(artistArray.getJSONObject(4).getString("name"));
+//
+//            ((TextView) view.findViewById(R.id.top_genre)).setText(artistArray.getJSONObject(0).getJSONArray("genres").get(0).toString());
+//        } catch (JSONException e) {
+//            throw new RuntimeException(e);
+//        }
+
+
+//
         ((TextView) view.findViewById(R.id.title)).setText(title);
-
-        try {
-
-            JSONArray songArray = trackJSON.getJSONArray("items");
-            ((TextView) view.findViewById(R.id.song_1)).setText(songArray.getJSONObject(0).getString("name"));
-            ((TextView) view.findViewById(R.id.song_2)).setText(songArray.getJSONObject(1).getString("name"));
-            ((TextView) view.findViewById(R.id.song_3)).setText(songArray.getJSONObject(2).getString("name"));
-            ((TextView) view.findViewById(R.id.song_4)).setText(songArray.getJSONObject(3).getString("name"));
-            ((TextView) view.findViewById(R.id.song_5)).setText(songArray.getJSONObject(4).getString("name"));
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
-            JSONArray artistArray = artistJSON.getJSONArray("items");
-            ((TextView) view.findViewById(R.id.artist_1)).setText(artistArray.getJSONObject(0).getString("name"));
-            ((TextView) view.findViewById(R.id.artist_2)).setText(artistArray.getJSONObject(1).getString("name"));
-            ((TextView) view.findViewById(R.id.artist_3)).setText(artistArray.getJSONObject(2).getString("name"));
-            ((TextView) view.findViewById(R.id.artist_4)).setText(artistArray.getJSONObject(3).getString("name"));
-            ((TextView) view.findViewById(R.id.artist_5)).setText(artistArray.getJSONObject(4).getString("name"));
-
-            ((TextView) view.findViewById(R.id.top_genre)).setText(artistArray.getJSONObject(0).getJSONArray("genres").get(0).toString());
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
 
         return view;
     }
