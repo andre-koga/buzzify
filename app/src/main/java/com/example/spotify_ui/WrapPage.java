@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -79,7 +81,6 @@ public class WrapPage extends Fragment {
                 ((TextView) view.findViewById(R.id.title)).setText(title);
 
                 try {
-
                     JSONArray songArray = trackJSON.getJSONArray("items");
                     ((TextView) view.findViewById(R.id.song_1)).setText(songArray.getJSONObject(0).getString("name"));
                     ((TextView) view.findViewById(R.id.song_2)).setText(songArray.getJSONObject(1).getString("name"));
@@ -92,6 +93,13 @@ public class WrapPage extends Fragment {
 
                 try {
                     JSONArray artistArray = artistJSON.getJSONArray("items");
+
+                    ImageView imageView = view.findViewById(R.id.top_artist_image);
+
+                    String URL = artistArray.getJSONObject(0).getJSONArray("images").getJSONObject(0).getString("url");
+
+                    Picasso.get().load(URL).into(imageView);
+
                     ((TextView) view.findViewById(R.id.artist_1)).setText(artistArray.getJSONObject(0).getString("name"));
                     ((TextView) view.findViewById(R.id.artist_2)).setText(artistArray.getJSONObject(1).getString("name"));
                     ((TextView) view.findViewById(R.id.artist_3)).setText(artistArray.getJSONObject(2).getString("name"));

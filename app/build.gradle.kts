@@ -68,4 +68,6 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
+    //images
+    implementation ("com.squareup.picasso:picasso:2.71828")
 }
