@@ -40,21 +40,24 @@ public class WrapPage extends Fragment {
     private String tracks;
     private String title;
 
+    private String timeFrame;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         String artistString = getArguments().getString("artist");
         String trackString = getArguments().getString("track");
-        title = getArguments().getString("title");
+        timeFrame = getArguments().getString("timeFrame");
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View view = inflater.inflate(R.layout.wrap_page, container,
                 false);
         CollectionReference userWraps = FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getUid()).collection("wraps");
-        Task<DocumentSnapshot> indSnapShot = userWraps.document("short_term").get();
+        Task<DocumentSnapshot> indSnapShot = userWraps.document(timeFrame).get();
         indSnapShot.addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot indDoc = indSnapShot.getResult();
                 artists = (String) indDoc.get("Artists");
                 tracks = (String) indDoc.get("Tracks");
+                title = (String) indDoc.get("Title");
                 Log.d("AIDS", "aids");
                 try {
                     artistJSON = new JSONObject(artists);

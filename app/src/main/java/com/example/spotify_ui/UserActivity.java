@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.spotify.sdk.android.auth.AuthorizationClient;
 
 
 public class UserActivity extends Fragment {
@@ -97,8 +98,9 @@ public class UserActivity extends Fragment {
                                     Log.d(TAG, "User account deleted.");
                                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                                     startActivity(intent);
+                                    AuthorizationClient.stopLoginActivity(getActivity(), Content.AUTH_TOKEN_REQUEST_CODE);
                                     getActivity().finish();
-                                    //AuthorizationClient.stopLoginActivity(getActivity(), Content.AUTH_TOKEN_REQUEST_CODE);
+
 
                                 }
                             }

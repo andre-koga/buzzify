@@ -2,9 +2,6 @@
 
 package com.example.spotify_ui.ui.home;
 
-import static com.example.spotify_ui.Visibility.YOU;
-import static com.example.spotify_ui.Wraps.wrap_list;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +28,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,6 +47,8 @@ public class HomeFragment extends Fragment {
     //    public AppCompatButton test;
     public Button homeBttn;
     public Button dashboardBttn;
+
+    private String title;
 
 
     // spotify api
@@ -71,10 +72,7 @@ public class HomeFragment extends Fragment {
         final Button generate = binding.generate;
 
         final LinearLayout main = binding.main;
-        for (int i = 0; i < wrap_list.size(); i++) {
-            Wraps wrap = wrap_list.get(i);
-            wrap.createWidget(main, wrap, HomeFragment.this);
-        }
+
 
         generate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,10 +83,9 @@ public class HomeFragment extends Fragment {
                 onGetTopTracks(TimeFrame.short_term, main);
             }
         });
-//        return root;
-//        +
 
-//
+        Wraps.createStoredWidgets(main);
+
         return root;
 }
 
@@ -213,14 +210,28 @@ public class HomeFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Wraps wrap = null;
                         try {
+
                             JSONObject temp = new JSONObject(response.body().string());
-                            wrap = new Wraps(YOU, topTracks, temp, timeFrame);
-                            Map<String, Object> test = new HashMap<String, Object>();
+                            Map<String, Object> test = new HashMap<>();
                             test.put("Tracks", topTracks.toString());
 
                             test.put("Artists", temp.toString());
+
+                            test.put("TimeFrame", timeFrame.toString());
+
+                            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
+                            String date = sdf.format(new Date()).toString();
+
+                            if (timeFrame == HomeFragment.TimeFrame.long_term) {
+                                title =  date + " - 1YR";
+                            } else if (timeFrame == HomeFragment.TimeFrame.medium_term) {
+                                title = date + " - 6M";
+                            } else {
+                                title =  date + " - 1M";
+                            }
+                            test.put("Title", title);
+
 
 
                             FirebaseUtil.addWraptoCollection(timeFrame.toString()).set(test);
@@ -229,8 +240,7 @@ public class HomeFragment extends Fragment {
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
-                        wrap_list.add(wrap);
-                        wrap.createWidget(main, wrap, HomeFragment.this);
+                        Wraps.createNewWidget(main, title, timeFrame.toString());
                     }
                 });
             }
