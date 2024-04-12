@@ -45,13 +45,18 @@ public class FirebaseUtil {
     public static DocumentReference addFriendtoCollection(Users user) {
         return FirebaseFirestore.getInstance().collection("users").document(currentUserId()).collection("friends").document(user.getUserId());
     }
-
+    public static DocumentReference addOtherFriendtoCollection(Users user) {
+        return FirebaseFirestore.getInstance().collection("users").document(user.getUserId()).collection("friends").document(currentUserId());
+    }
     public static  DocumentReference addWraptoCollection(String timeFrame) {
 
         return FirebaseFirestore.getInstance().collection("users").document(currentUserId()).collection("wraps").document(timeFrame);
     }
     public static CollectionReference getAllWraps() {
         return FirebaseFirestore.getInstance().collection("users").document(currentUserId()).collection("wraps");
+    }
+    public static CollectionReference allFriendsCollectionReference(){
+        return FirebaseFirestore.getInstance().collection("users").document(currentUserId()).collection("friends");
     }
 
 

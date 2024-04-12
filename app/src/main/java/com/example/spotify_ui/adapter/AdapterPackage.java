@@ -16,14 +16,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.spotify_ui.R;
 import com.example.spotify_ui.model.Users;
+import com.example.spotify_ui.MainActivity;
+
 import com.example.spotify_ui.utils.FirebaseUtil;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.Timestamp;
 
 public class AdapterPackage extends FirestoreRecyclerAdapter<Users, AdapterPackage.UserModelViewHolder> {
 
     Context context;
     Button addButton;
+    Button duoWrapped;
 
     public AdapterPackage(@NonNull FirestoreRecyclerOptions<Users> options, Context context) {
         super(options);
@@ -40,6 +44,7 @@ public class AdapterPackage extends FirestoreRecyclerAdapter<Users, AdapterPacka
             @Override
             public void onClick(View v) {
                 FirebaseUtil.addFriendtoCollection(model).set(model);
+                FirebaseUtil.addOtherFriendtoCollection(model).set(MainActivity.userModel);
             }
         });
     }
@@ -60,6 +65,7 @@ public class AdapterPackage extends FirestoreRecyclerAdapter<Users, AdapterPacka
             usernameText = itemView.findViewById(R.id.user_name_text);
             profilePic = itemView.findViewById(R.id.profile_pic_image_view);
             addButton = itemView.findViewById(R.id.addButton);
+            duoWrapped = itemView.findViewById(R.id.duoWrapped);
 
         }
     }
