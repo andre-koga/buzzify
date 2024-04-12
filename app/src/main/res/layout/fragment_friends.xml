@@ -24,9 +24,11 @@
 
                 android:id="@+id/button_friends"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
+                android:background="@color/lighterBlack"
                 android:text="Search Friends"
                 android:translationX="120dp"
+
                 tools:layout_editor_absoluteX="248dp"
                 tools:layout_editor_absoluteY="7dp" />
 

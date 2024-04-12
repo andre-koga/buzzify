@@ -32,15 +32,16 @@ public class FirebaseUtil {
     public static CollectionReference allUserCollectionReference(){
         return FirebaseFirestore.getInstance().collection("users");
     }
-    public static CollectionReference allFriendsCollectionReference(){
-        return FirebaseFirestore.getInstance().collection("users").document(currentUserId()).collection("friends");
-    }
 
 
     public static void logout(){
         FirebaseAuth.getInstance().signOut();
     }
 
+
+    public static CollectionReference createFriendsCollection() {
+        return FirebaseFirestore.getInstance().collection("users").document(currentUserId()).collection("friends");
+    }
     public static DocumentReference addFriendtoCollection(Users user) {
         return FirebaseFirestore.getInstance().collection("users").document(currentUserId()).collection("friends").document(user.getUserId());
     }
