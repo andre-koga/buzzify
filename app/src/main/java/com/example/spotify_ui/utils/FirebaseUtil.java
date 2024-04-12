@@ -53,12 +53,15 @@ public class FirebaseUtil {
 
         return FirebaseFirestore.getInstance().collection("users").document(currentUserId()).collection("wraps").document(timeFrame);
     }
-    public static CollectionReference getAllWraps() {
-        return FirebaseFirestore.getInstance().collection("users").document(currentUserId()).collection("wraps");
+    public static CollectionReference getAllWraps(String userId) {
+        return FirebaseFirestore.getInstance().collection("users").document(userId).collection("wraps");
     }
     public static CollectionReference allFriendsCollectionReference(){
         return FirebaseFirestore.getInstance().collection("users").document(currentUserId()).collection("friends");
     }
+
+
+
 
 
 }

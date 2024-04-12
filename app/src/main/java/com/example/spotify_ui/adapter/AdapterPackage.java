@@ -15,14 +15,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.spotify_ui.MainActivity;
 import com.example.spotify_ui.R;
 import com.example.spotify_ui.model.Users;
-import com.example.spotify_ui.MainActivity;
-
 import com.example.spotify_ui.utils.FirebaseUtil;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 public class AdapterPackage extends FirestoreRecyclerAdapter<Users, AdapterPackage.UserModelViewHolder> {
 
@@ -48,6 +53,13 @@ public class AdapterPackage extends FirestoreRecyclerAdapter<Users, AdapterPacka
                 FirebaseUtil.addOtherFriendtoCollection(model).set(MainActivity.userModel);
             }
         });
+
+        duoWrapped.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreateDuoWrapJSONHelper(model.getUserId());
+            }
+        });
     }
 
     @NonNull
@@ -70,4 +82,52 @@ public class AdapterPackage extends FirestoreRecyclerAdapter<Users, AdapterPacka
 
         }
     }
+    public void CreateDuoWrapJSONHelper(String otherId) {
+        // retrieve wrap from friend, and retrieve wrap from myself
+        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, String> otherData = new HashMap<>();
+        CollectionReference allWraps = FirebaseUtil.getAllWraps(FirebaseAuth.getInstance().getUid());
+        allWraps.get().addOnCompleteListener(task ->  {
+            if (task.isSuccessful()) {
+                for (DocumentSnapshot doc : task.getResult()) {
+                    String title = (String) doc.get("Title");
+                    String artists = (String) doc.get("Artists");
+                    String tracks = (String) doc.get("Tracks");
+
+                    data.put("title", title);
+                    data.put("artists", artists);
+                    data.put("tracks", tracks);
+                    break;
+                }
+                CollectionReference allWraps2 = FirebaseUtil.getAllWraps(otherId);
+                allWraps2.get().addOnCompleteListener(task1 -> {
+                    if (task.isSuccessful()) {
+                        for (DocumentSnapshot doc : task.getResult()) {
+                            String title = (String) doc.get("Title");
+                            String artists = (String) doc.get("Artists");
+                            String tracks = (String) doc.get("Tracks");
+
+                            otherData.put("title", title);
+                            otherData.put("artists", artists);
+                            otherData.put("tracks", tracks);
+                            break;
+                        }
+                        CreateDuoWrapJSON(data, otherData);
+
+                    }
+                });
+            }
+            });
+
+
+    }
+    public JSONObject CreateDuoWrapJSON(HashMap<String, String> yourData, HashMap<String, String> otherData) {
+        // retrieve wrap from friend, and retrieve wrap from myself
+
+
+        JSONObject result = new JSONObject();
+
+        return result;
+    }
+
 }

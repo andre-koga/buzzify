@@ -15,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.spotify_ui.Content;
 import com.example.spotify_ui.R;
+import com.example.spotify_ui.Wraps;
 import com.example.spotify_ui.databinding.FragmentFriendsBinding;
 
 public class FragmentFriends extends Fragment {
@@ -33,6 +34,8 @@ public class FragmentFriends extends Fragment {
         View root = binding.getRoot();
 
         final LinearLayout main = binding.main;
+
+        Wraps.createStoredFriendsWraps(main);
 
         return root;
     }

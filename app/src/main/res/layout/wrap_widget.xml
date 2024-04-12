@@ -25,18 +25,10 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/likes_count"
-            android:textColor="@color/white"
-            android:layout_weight="1"
-            android:text="Likes: 30"
-            android:textSize="20dp">
-        </androidx.appcompat.widget.AppCompatTextView>
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:text="valentinaaag"
             android:id="@+id/user_name"
             android:textColor="@color/white"
+            android:textAlignment="viewEnd"
             android:layout_weight="1"
             android:textSize="20dp">
         </androidx.appcompat.widget.AppCompatTextView>
