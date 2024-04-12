@@ -15,14 +15,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.spotify_ui.MainActivity;
 import com.example.spotify_ui.R;
 import com.example.spotify_ui.model.Users;
-import com.example.spotify_ui.MainActivity;
-
 import com.example.spotify_ui.utils.FirebaseUtil;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.Timestamp;
+
+import org.json.JSONObject;
 
 public class AdapterPackage extends FirestoreRecyclerAdapter<Users, AdapterPackage.UserModelViewHolder> {
 
@@ -48,6 +48,14 @@ public class AdapterPackage extends FirestoreRecyclerAdapter<Users, AdapterPacka
                 FirebaseUtil.addOtherFriendtoCollection(model).set(MainActivity.userModel);
             }
         });
+
+        duoWrapped.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // when the duo wrap button is clicked, we should check both jsons and then "merge" them
+                CreateDuoWrapJSON();
+            }
+        });
     }
 
     @NonNull
@@ -69,5 +77,15 @@ public class AdapterPackage extends FirestoreRecyclerAdapter<Users, AdapterPacka
             duoWrapped = itemView.findViewById(R.id.duoWrapped);
 
         }
+    }
+
+    // duo wrap stuff
+    public JSONObject CreateDuoWrapJSON() {
+        // retrieve wrap from friend, and retrieve wrap from myself
+
+
+        JSONObject result = new JSONObject();
+
+        return result;
     }
 }
