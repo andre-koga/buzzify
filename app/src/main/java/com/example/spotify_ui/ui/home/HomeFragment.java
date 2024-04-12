@@ -8,8 +8,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,24 +73,51 @@ public class HomeFragment extends Fragment {
 
         final TextView textView = binding.textHome;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        final Button generate = binding.generate;
 
         final LinearLayout main = binding.main;
 
-
-        generate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Wraps wrap = new Wraps(YOU, new JSONObject());
-//                wrap_list.add(wrap);
-//                wrap.createWidget(main, wrap, HomeFragment.this);
-                onGetTopTracks(TimeFrame.short_term, main);
-            }
-        });
+//        generate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                Wraps wrap = new Wraps(YOU, new JSONObject());
+////                wrap_list.add(wrap);
+////                wrap.createWidget(main, wrap, HomeFragment.this);
+//                onGetTopTracks(TimeFrame.short_term, main);
+//            }
+//        });
 
         Wraps.createStoredWidgets(main);
 
         Wraps.createStoredFriendsWraps(main);
+
+        // Dropdown
+        Spinner spinner = root.findViewById(R.id.time_picker);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                getActivity(),
+                R.array.time_options,
+                android.R.layout.simple_spinner_item
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selected = (String) parent.getItemAtPosition(position);
+                if (selected.equals("Select wrap timeframe")) {
+                    return;
+                } else if (selected.equals("1 month wrap"))
+                    onGetTopTracks(TimeFrame.short_term, main);
+                else if (selected.equals("6 months wrap"))
+                    onGetTopTracks(TimeFrame.medium_term, main);
+                else if (selected.equals("1 year wrap"))
+                    onGetTopTracks(TimeFrame.long_term, main);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+            }
+        });
 
         return root;
 }
