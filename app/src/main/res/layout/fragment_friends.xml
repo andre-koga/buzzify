@@ -72,12 +72,6 @@
             android:layout_weight="1"
             android:text="Friends" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/spotifyGreen"
-            android:layout_weight="1"
-            android:text="Public" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

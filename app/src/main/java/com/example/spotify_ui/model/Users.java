@@ -18,6 +18,7 @@ public class Users {
         this.username = username;
         this.createdTimestamp = createdTimestamp;
         this.userId = userId;
+
     }
     public CollectionReference getSubCollectionRef() {
         return subCollectionRef;

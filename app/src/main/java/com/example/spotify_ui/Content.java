@@ -1,4 +1,5 @@
 
+
 package com.example.spotify_ui;
 
 import android.content.Intent;
@@ -26,7 +27,7 @@ public class Content extends AppCompatActivity {
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     public static final String CLIENT_ID = "c5d5db9b10f6403090a273b1e24bee8a";
     public static final String REDIRECT_URI = "spotifyacc://auth";
-    public static final String[] SCOPE = { "user-read-private user-read-email" };
+    public static final String[] SCOPE = { "user-read-private user-read-email user-top-read" };
     public static final int AUTH_TOKEN_REQUEST_CODE = 0;
     public static final int AUTH_CODE_REQUEST_CODE = 1;
 
@@ -69,94 +70,94 @@ public class Content extends AppCompatActivity {
     }
 
 
-        // more spotify api code here
-        /**
-         * Get token from Spotify
-         * This method will open the Spotify login activity and get the token
-         * What is token?
-         * https://developer.spotify.com/documentation/general/guides/authorization-guide/
-         */
-        public void getToken () {
-            final AuthorizationRequest request = getAuthenticationRequest(AuthorizationResponse.Type.TOKEN);
-            AuthorizationClient.openLoginActivity(Content.this, AUTH_TOKEN_REQUEST_CODE, request);
+    // more spotify api code here
+    /**
+     * Get token from Spotify
+     * This method will open the Spotify login activity and get the token
+     * What is token?
+     * https://developer.spotify.com/documentation/general/guides/authorization-guide/
+     */
+    public void getToken () {
+        final AuthorizationRequest request = getAuthenticationRequest(AuthorizationResponse.Type.TOKEN);
+        AuthorizationClient.openLoginActivity(Content.this, AUTH_TOKEN_REQUEST_CODE, request);
 
 
+    }
+
+    /**
+     * When the app leaves this activity to momentarily get a token/code, this
+     * function
+     * fetches the result of that external activity to get the response from Spotify
+     */
+    @Override
+    protected void onActivityResult ( int requestCode, int resultCode, Intent data){
+
+
+
+        super.onActivityResult(requestCode, resultCode, data);
+        final AuthorizationResponse response = AuthorizationClient.getResponse(resultCode, data);
+
+
+        // Check which request code is present (if any)
+        if (AUTH_TOKEN_REQUEST_CODE == requestCode) {
+
+
+
+            mAccessToken = response.getAccessToken();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+
+                    Toast.makeText(Content.this, mAccessToken, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else if (AUTH_CODE_REQUEST_CODE == requestCode) {
+            mAccessCode = response.getCode();
+
+
+            Toast.makeText(Content.this, mAccessCode,
+                    Toast.LENGTH_SHORT).show();
+            // onGetTokenWithCode();
         }
+    }
 
-        /**
-         * When the app leaves this activity to momentarily get a token/code, this
-         * function
-         * fetches the result of that external activity to get the response from Spotify
-         */
-        @Override
-        protected void onActivityResult ( int requestCode, int resultCode, Intent data){
+    /**
+     * Get authentication request
+     *
+     * @param type the type of the request
+     * @return the authentication request
+     */
+    private AuthorizationRequest getAuthenticationRequest (AuthorizationResponse.Type type){
+        return new AuthorizationRequest.Builder(CLIENT_ID, type, getRedirectUri().toString())
+                .setShowDialog(false)
+                .setScopes(SCOPE) // <--- Change the scope of your requested token here
+                .setCampaign("your-campaign-token")
+                .build();
+    }
 
+    /**
+     * Gets the redirect Uri for Spotify
+     *
+     * @return redirect Uri object
+     */
+    private Uri getRedirectUri () {
+        return Uri.parse(REDIRECT_URI);
+    }
 
+    public static Button getButton() {
+        return btn;
+    }
 
-            super.onActivityResult(requestCode, resultCode, data);
-            final AuthorizationResponse response = AuthorizationClient.getResponse(resultCode, data);
-
-
-            // Check which request code is present (if any)
-            if (AUTH_TOKEN_REQUEST_CODE == requestCode) {
-
-
-
-                mAccessToken = response.getAccessToken();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-
-                        Toast.makeText(Content.this, mAccessToken, Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } else if (AUTH_CODE_REQUEST_CODE == requestCode) {
-                mAccessCode = response.getCode();
-
-
-                Toast.makeText(Content.this, mAccessCode,
-                        Toast.LENGTH_SHORT).show();
-                // onGetTokenWithCode();
-            }
-        }
-
-        /**
-         * Get authentication request
-         *
-         * @param type the type of the request
-         * @return the authentication request
-         */
-        private AuthorizationRequest getAuthenticationRequest (AuthorizationResponse.Type type){
-            return new AuthorizationRequest.Builder(CLIENT_ID, type, getRedirectUri().toString())
-                    .setShowDialog(false)
-                    .setScopes(SCOPE) // <--- Change the scope of your requested token here
-                    .setCampaign("your-campaign-token")
-                    .build();
-        }
-
-        /**
-         * Gets the redirect Uri for Spotify
-         *
-         * @return redirect Uri object
-         */
-        private Uri getRedirectUri () {
-            return Uri.parse(REDIRECT_URI);
-        }
-
-        public static Button getButton() {
-            return btn;
-        }
-
-        @Override
-        protected void onDestroy () {
-            super.onDestroy();
-        }
+    @Override
+    protected void onDestroy () {
+        super.onDestroy();
+    }
 
 //        public void clearUserInformation() {
 //            AuthorizationClient.clearCookies(this);
 //        }
-        //
+    //
 
 
 }

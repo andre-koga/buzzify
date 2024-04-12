@@ -1,4 +1,5 @@
 
+
 package com.example.spotify_ui.ui.home;
 
 import static com.example.spotify_ui.Visibility.YOU;
@@ -24,11 +25,14 @@ import com.example.spotify_ui.Content;
 import com.example.spotify_ui.R;
 import com.example.spotify_ui.Wraps;
 import com.example.spotify_ui.databinding.FragmentHomeBinding;
+import com.example.spotify_ui.utils.FirebaseUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -44,7 +48,7 @@ public class HomeFragment extends Fragment {
     //    public AppCompatButton test;
     public Button homeBttn;
     public Button dashboardBttn;
-    public Button notificationBttn;
+
 
     // spotify api
     private final OkHttpClient mOkHttpClient = new OkHttpClient();
@@ -64,30 +68,29 @@ public class HomeFragment extends Fragment {
 
         final TextView textView = binding.textHome;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        final Button generate = binding.generateWraps;
+        final Button generate = binding.generate;
+
         final LinearLayout main = binding.main;
         for (int i = 0; i < wrap_list.size(); i++) {
             Wraps wrap = wrap_list.get(i);
             wrap.createWidget(main, wrap, HomeFragment.this);
         }
 
-
         generate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Wraps wrap = new Wraps(YOU, "a", "z", "L");
-                wrap_list.add(wrap);
-                wrap.createWidget(main, wrap, HomeFragment.this);
+//                Wraps wrap = new Wraps(YOU, new JSONObject());
+//                wrap_list.add(wrap);
+//                wrap.createWidget(main, wrap, HomeFragment.this);
+                onGetTopTracks(TimeFrame.short_term, main);
             }
-
         });
+//        return root;
+//        +
 
-
+//
         return root;
-
-
-
-    }
+}
 
     public void onViewCreated(@NonNull View view, Bundle SavedInstance) {
 
@@ -97,8 +100,6 @@ public class HomeFragment extends Fragment {
         dashboardBttn = view.findViewById(R.id.button3);
         dashboardBttn.setVisibility(View.VISIBLE);
 
-        notificationBttn = view.findViewById(R.id.button4);
-        notificationBttn.setVisibility(View.VISIBLE);
 
         Activity activity = getActivity();
         (Content.getButton()).setOnClickListener(new View.OnClickListener() {
@@ -117,27 +118,13 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        notificationBttn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.action_navigation_home_to_navigation_notifications);
-            }
-        });
-
-
 
     }
-
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-
-
-    public void WrapDone(JSONObject result) {
-        Log.d("JSONOBJECT", result.toString());
     }
 
     // spotify stuff
@@ -148,7 +135,7 @@ public class HomeFragment extends Fragment {
         short_term, medium_term, long_term
     }
 
-    public void onMakeWrap(TimeFrame timeFrame) {
+    public void onGetTopTracks(TimeFrame timeFrame, LinearLayout main) {
         if (Content.mAccessToken == null) {
             Toast.makeText(getActivity(), "You need to get an access token first!", Toast.LENGTH_SHORT).show();
             return;
@@ -163,7 +150,7 @@ public class HomeFragment extends Fragment {
 
         // Create a request to get the user profile
         final Request request = new Request.Builder()
-                .url("https://api.spotify.com/v1/me/top/tracks?time_range=" + term)
+                .url("https://api.spotify.com/v1/me/top/tracks?limit=5&time_range=" + term)
                 .addHeader("Authorization", "Bearer " + Content.mAccessToken)
                 .build();
 
@@ -180,32 +167,38 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                JSONObject topTracks = null;
                 try {
-                    WrapDone(new JSONObject(response.body().string()));
+                    topTracks = new JSONObject(response.body().string());
                 } catch (JSONException e) {
-                    Log.d("JSON", "Failed to parse data: " + e);
-                    Toast.makeText(getActivity(), "Failed to parse data, watch Logcat for more details",
-                            Toast.LENGTH_SHORT).show();
+                    throw new RuntimeException(e);
                 }
+                onGetTopArtists(timeFrame, main, topTracks);
             }
         });
     }
-    public void onGetUserProfileClicked() {
+
+    public void onGetTopArtists(TimeFrame timeFrame, LinearLayout main, JSONObject topTracks) {
         if (Content.mAccessToken == null) {
             Toast.makeText(getActivity(), "You need to get an access token first!", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        String term = "medium_term";
+        if (timeFrame == TimeFrame.long_term) {
+            term = "long_term";
+        } else if (timeFrame == TimeFrame.short_term) {
+            term = "short_term";
+        }
+
         // Create a request to get the user profile
         final Request request = new Request.Builder()
-                .url("https://api.spotify.com/v1/me")
+                .url("https://api.spotify.com/v1/me/top/artists?limit=5&time_range=" + term)
                 .addHeader("Authorization", "Bearer " + Content.mAccessToken)
                 .build();
 
         cancelCall();
         mCall = mOkHttpClient.newCall(request);
-
-
 
         mCall.enqueue(new Callback() {
             @Override
@@ -217,14 +210,29 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                try {
-                    final JSONObject jsonObject = new JSONObject(response.body().string());
-                    // IT WORKS!
-                } catch (JSONException e) {
-                    Log.d("JSON", "Failed to parse data: " + e);
-                    Toast.makeText(getActivity(), "Failed to parse data, watch Logcat for more details",
-                            Toast.LENGTH_SHORT).show();
-                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Wraps wrap = null;
+                        try {
+                            JSONObject temp = new JSONObject(response.body().string());
+                            wrap = new Wraps(YOU, topTracks, temp, timeFrame);
+                            Map<String, Object> test = new HashMap<String, Object>();
+                            test.put("Tracks", topTracks.toString());
+
+                            test.put("Artists", temp.toString());
+
+
+                            FirebaseUtil.addWraptoCollection(timeFrame.toString()).set(test);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        wrap_list.add(wrap);
+                        wrap.createWidget(main, wrap, HomeFragment.this);
+                    }
+                });
             }
         });
     }

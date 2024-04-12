@@ -24,7 +24,7 @@
                 android:layout_margin="20dp"
                 android:layout_marginBottom="10dp"
                 android:text="@string/your_wraps"
-                android:textAlignment="viewStart"
+                android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="50sp"
                 android:textStyle="bold"
@@ -36,30 +36,32 @@
                 app:layout_constraintVertical_bias="0.05" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/generate_wraps"
-                android:layout_width="wrap_content"
+                android:id="@+id/generate"
+
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="40dp"
                 android:padding="20dp"
-                android:text="@string/generate_wrap"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:background="@color/spotifyGreen"
-
-                app:cornerRadius="50dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_home" />
+                android:spinnerMode="dropdown"
+                android:textColor="@color/black"/>
+<!--            <Spinner-->
+<!--                android:id="@+id/time_picker"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="40dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_marginEnd="40dp"-->
+<!--                android:padding="20dp"-->
+<!--                android:spinnerMode="dropdown"-->
+<!--                android:background="@drawable/rounded_corner"-->
+<!--                android:textColor="@color/black"/>-->
 
             <LinearLayout
                 android:id="@+id/main"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/generate_wraps"
+                app:layout_constraintTop_toBottomOf="@id/generate"
                 android:layout_marginTop="30dp"
                 android:orientation="vertical"
                 >
@@ -92,13 +94,7 @@
             android:layout_weight="1"
             android:text="Friends" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/spotifyGreen"
-            android:layout_weight="1"
-            android:text="Public" />
+
     </LinearLayout>
 
 

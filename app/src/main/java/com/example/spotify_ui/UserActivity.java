@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class UserActivity extends Fragment {
@@ -33,6 +34,7 @@ public class UserActivity extends Fragment {
     TextView txtUser;
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
+
 
     final String TAG = "UserActivity";
 
@@ -49,21 +51,15 @@ public class UserActivity extends Fragment {
     }
 
     public void onViewCreated(@NonNull View view, Bundle SavedInstance) {
+
         firebaseAuth = FirebaseAuth.getInstance();
         btnLogOut = (Button) view.findViewById(R.id.btnLogOut);
         btnDelete = (Button) view.findViewById(R.id.btnDeleteAccount);
-        btnResetPassword = (Button) view.findViewById(R.id.btnResetPassword);
         btnBack = (Button) view.findViewById(R.id.back_button);
         txtUser = (TextView) view.findViewById(R.id.txtUser);
         user = firebaseAuth.getCurrentUser();
         txtUser.setText(user.getEmail());
 
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setDisplayShowCustomEnabled(true);
-//        actionBar.setCustomView(R.layout.title_main);
-//        View v = actionBar.getCustomView();
-//        Button btn = v.findViewById(R.id.user_button);
-//        btn.setText(user.getEmail());
 
 
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -79,8 +75,10 @@ public class UserActivity extends Fragment {
             public void onClick(View view) {
 
                 FirebaseAuth.getInstance().signOut();
-                //Intent I = new Intent(UserActivity.this, LoginActivity.class);
-                //startActivity(I);
+
+                //AuthorizationClient.stopLoginActivity(getActivity(), Content.AUTH_TOKEN_REQUEST_CODE);
+
+
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();
@@ -90,33 +88,27 @@ public class UserActivity extends Fragment {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                user.delete()
+                FirebaseAuth.getInstance().getCurrentUser().delete()
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
+                                    FirebaseFirestore.getInstance().collection("users").document(user.getUid()).delete();
                                     Log.d(TAG, "User account deleted.");
+                                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                    startActivity(intent);
+                                    getActivity().finish();
+                                    //AuthorizationClient.stopLoginActivity(getActivity(), Content.AUTH_TOKEN_REQUEST_CODE);
+
                                 }
                             }
                         });
             }
         });
 
-        btnResetPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String newPassword = "SOME-SECURE-PASSWORD";
-                user.updatePassword(newPassword)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Log.d(TAG, "User password updated.");
-                                }
-                            }
-                        });
-            }
-        });
+
+
+
 
     }
 

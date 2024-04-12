@@ -9,6 +9,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class FirebaseUtil {
 
+
+
     public static String currentUserId(){
         return FirebaseAuth.getInstance().getUid();
     }
@@ -43,4 +45,11 @@ public class FirebaseUtil {
     public static DocumentReference addFriendtoCollection(Users user) {
         return FirebaseFirestore.getInstance().collection("users").document(currentUserId()).collection("friends").document(user.getUserId());
     }
+
+    public static  DocumentReference addWraptoCollection(String timeFrame) {
+
+        return FirebaseFirestore.getInstance().collection("users").document(currentUserId()).collection("wraps").document(timeFrame);
+    }
+
+
 }
