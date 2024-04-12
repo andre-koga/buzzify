@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     TextView loginRedirectText;
     FirebaseAuth firebaseAuth;
 
-    Users userModel;
+    public static Users userModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +109,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    public Users getUserModel() {
+        return userModel;
+    }
+
     private boolean passwordMatch(String paswd, String paswd2) {
         return !paswd.equals(paswd2);
     }
