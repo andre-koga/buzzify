@@ -13,6 +13,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.spotify_ui.ui.home.HomeFragment;
+import com.example.spotify_ui.utils.FirebaseUtil;
 
 import org.json.JSONObject;
 
@@ -20,20 +21,29 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Wraps extends Activity {
+public class Wraps {
     public static ArrayList<Wraps> wrap_list = new ArrayList<>(0);
     private final Visibility visible;
-
-    private final HomeFragment.TimeFrame timeFrame;
     private final String wrap_name;
+    private final String wrap_id;
+    private final HomeFragment.TimeFrame timeFrame;
     private final JSONObject trackJSON;
     private final JSONObject artistJSON;
-
+    public Wraps() {
+        this.visible = Visibility.FRIENDS;
+        this.trackJSON = null;
+        this.wrap_name = null;
+        this.artistJSON = null;
+        this.wrap_id = "";
+        this.timeFrame = null;
+    }
     public Wraps(Visibility visible, JSONObject topTracks, JSONObject topArtists, HomeFragment.TimeFrame timeFrame) {
         this.visible = visible;
         this.timeFrame = timeFrame;
         this.trackJSON = topTracks;
         this.artistJSON = topArtists;
+        this.wrap_id = Double.toString(Math.random());
+
 
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
         String date = sdf.format(new Date()).toString();
@@ -46,9 +56,31 @@ public class Wraps extends Activity {
             this.wrap_name = date + " - 1M";
         }
     }
-
     public Visibility getVisible() {
         return visible;
+    }
+
+    public String getWrap_name() {
+        return wrap_name;
+    }
+
+    public String getWrap_id() {
+        return wrap_id;
+    }
+
+    public HomeFragment.TimeFrame getTimeFrame() {
+        return timeFrame;
+    }
+
+    public JSONObject getTrackJSON() {
+        return trackJSON;
+    }
+
+    public JSONObject getArtistJSON() {
+        return artistJSON;
+    }
+    public String getWrapID() {
+        return wrap_id;
     }
 
     public void createWidget(LinearLayout main, Wraps wrap, Fragment frag) {
@@ -62,11 +94,21 @@ public class Wraps extends Activity {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("artist", artistJSON.toString());
-                bundle.putString("track", trackJSON.toString());
-                bundle.putString("title", wrap_name);
-                NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.navigation_wrap_page, bundle);
+                FirebaseUtil.addWraptoCollection(wrap).set(wrap);
+                try {
+                    bundle.putString("artist", artistJSON.toString());
+                    bundle.putString("track", trackJSON.toString());
+                    bundle.putString("title", wrap_name);
+                    NavController navController = Navigation.findNavController(v);
+                    navController.navigate(R.id.navigation_wrap_page, bundle);
+                } catch (NullPointerException e) {
+                    bundle.putString("artist", "isNull");
+                    bundle.putString("track", "isNull");
+                    bundle.putString("title", "isNull");
+                    NavController navController = Navigation.findNavController(v);
+                    navController.navigate(R.id.navigation_wrap_page, bundle);
+                }
+
 ////                NavHostFragment.findNavController(new WrapPage()).navigate(R.id.navigation_wrap_page);
 //                Fragment fragment = new WrapPage();
 //                FragmentManager fragmentManager = frag.getActivity().getSupportFragmentManager();
@@ -81,6 +123,7 @@ public class Wraps extends Activity {
 //        instructor.setText("Instructor: " + (wrap.getArtists()));
 //        location.setText("Location: " + wrap.getUser());
 //        time.setText("Date/Time: " + wrap.getWrap_name());
+        // Getter and setter for 'visible'
 
         main.addView(view);
     }

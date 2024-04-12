@@ -24,6 +24,9 @@ import com.example.spotify_ui.R;
 import com.example.spotify_ui.Visibility;
 import com.example.spotify_ui.Wraps;
 import com.example.spotify_ui.databinding.FragmentHomeBinding;
+import com.example.spotify_ui.utils.FirebaseUtil;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,6 +69,7 @@ public class HomeFragment extends Fragment {
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         final Button generate = binding.generateWraps;
         final LinearLayout main = binding.main;
+        populateWrapList();
         for (int i = 0; i < wrap_list.size(); i++) {
             Wraps wrap = wrap_list.get(i);
             wrap.createWidget(main, wrap, HomeFragment.this);
@@ -227,13 +231,31 @@ public class HomeFragment extends Fragment {
         });
     }
 
+
     private void cancelCall() {
         if (mCall != null) {
             mCall.cancel();
         }
     }
     //
+    public void populateWrapList() {
+        // Get the collection reference for wraps
+        CollectionReference wrapsCollectionRef = FirebaseUtil.getAllWraps();
 
+        // Clear the existing wrap_list
 
-
+        // Add a listener to the wraps collection to fetch the wraps
+        wrapsCollectionRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (DocumentSnapshot document : task.getResult()) {
+                    // Convert each document to a Wraps object and add it to the wrap_list
+                    Wraps wrap = document.toObject(Wraps.class);
+                    wrap_list.add(wrap);
+                }
+            } else {
+                // Handle errors here
+                Log.d("TAG", "Error getting wraps: ", task.getException());
+            }
+        });
+    }
 }
