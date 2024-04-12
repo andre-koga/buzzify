@@ -16,7 +16,6 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.spotify_ui.ui.home.HomeViewModel;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -40,17 +39,20 @@ public class WrapPage extends Fragment {
     private String tracks;
     private String title;
 
+    private String whatUser;
+
     private String timeFrame;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         String artistString = getArguments().getString("artist");
         String trackString = getArguments().getString("track");
+        whatUser = getArguments().getString("whatUser");
         timeFrame = getArguments().getString("timeFrame");
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View view = inflater.inflate(R.layout.wrap_page, container,
                 false);
-        CollectionReference userWraps = FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getUid()).collection("wraps");
+        CollectionReference userWraps = FirebaseFirestore.getInstance().collection("users").document(whatUser).collection("wraps");
         Task<DocumentSnapshot> indSnapShot = userWraps.document(timeFrame).get();
         indSnapShot.addOnCompleteListener(task -> {
             if (task.isSuccessful()) {

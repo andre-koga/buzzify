@@ -23,6 +23,7 @@ import com.example.spotify_ui.R;
 import com.example.spotify_ui.Wraps;
 import com.example.spotify_ui.databinding.FragmentHomeBinding;
 import com.example.spotify_ui.utils.FirebaseUtil;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -85,6 +86,8 @@ public class HomeFragment extends Fragment {
         });
 
         Wraps.createStoredWidgets(main);
+
+        Wraps.createStoredFriendsWraps(main);
 
         return root;
 }
@@ -240,7 +243,7 @@ public class HomeFragment extends Fragment {
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
-                        Wraps.createNewWidget(main, title, timeFrame.toString());
+                        Wraps.createNewWidget(main, title, timeFrame.toString(), FirebaseAuth.getInstance().getUid());
                     }
                 });
             }

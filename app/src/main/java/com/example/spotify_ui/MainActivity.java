@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     TextView loginRedirectText;
     FirebaseAuth firebaseAuth;
 
-    Users userModel;
+    public static Users userModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

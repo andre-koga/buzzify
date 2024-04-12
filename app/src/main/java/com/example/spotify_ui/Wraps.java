@@ -23,7 +23,8 @@ public class Wraps {
 
 
 
-    public static void createNewWidget(LinearLayout main, String title, String timeFrame) {
+    public static void createNewWidget(LinearLayout main, String title, String timeFrame, String whatUser) {
+
         View view = LayoutInflater.from(main.getContext()).inflate(R.layout.wrap_widget,null, false);
         Button btn = (Button) ((ViewGroup) view).getChildAt(0);
         btn.setText(title);
@@ -36,6 +37,7 @@ public class Wraps {
                 Bundle bundle = new Bundle();
                 bundle.putString("title", title);
                 bundle.putString("timeFrame", timeFrame);
+                bundle.putString("whatUser", whatUser);
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.navigation_wrap_page, bundle);
 
@@ -55,9 +57,32 @@ public class Wraps {
                 for (DocumentSnapshot document : task.getResult()) {
                     title = (String) document.get("Title");
                     timeFrame = (String) document.get("TimeFrame");
-                    createNewWidget(main, title, timeFrame);
+                    createNewWidget(main, title, timeFrame, FirebaseAuth.getInstance().getUid());
                 }
 
+            }
+        });
+    }
+
+    public static void createStoredFriendsWraps(LinearLayout main) {
+        CollectionReference refss = FirebaseFirestore.getInstance().collection("users");
+        CollectionReference ref = refss.document(FirebaseAuth.getInstance().getUid()).collection("friends");
+        ref.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (DocumentSnapshot doc : task.getResult()) {
+                    String friendsId = doc.getId();
+                    CollectionReference friendsWraps = refss.document(friendsId).collection("wraps");
+                    friendsWraps.get().addOnCompleteListener(tasks ->{
+                        if (tasks.isSuccessful()) {
+                            for (DocumentSnapshot wrap : tasks.getResult()) {
+                                String title = (String) wrap.get("Title");
+                                String timeFrame = (String) wrap.get("TimeFrame");
+                                createNewWidget(main, title, timeFrame, friendsId);
+                            }
+                        }
+                    });
+
+                }
             }
         });
     }
