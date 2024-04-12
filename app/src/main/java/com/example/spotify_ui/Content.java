@@ -41,6 +41,8 @@ public class Content extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getToken();

@@ -173,27 +173,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintRight_toLeftOf="parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Listening Time:"
-                    android:textColor="@color/white"
-                    android:textSize="20dp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="800.116"
-                    android:textColor="@color/white"
-                    android:textSize="35dp"
-                    android:textStyle="bold"/>
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

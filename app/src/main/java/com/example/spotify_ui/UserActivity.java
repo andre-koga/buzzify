@@ -97,8 +97,9 @@ public class UserActivity extends Fragment {
                                     FirebaseFirestore.getInstance().collection("users").document(user.getUid()).delete();
                                     Log.d(TAG, "User account deleted.");
                                     Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                    AuthorizationClient.stopLoginActivity(getActivity(), Content.AUTH_CODE_REQUEST_CODE);
                                     startActivity(intent);
-                                    AuthorizationClient.stopLoginActivity(getActivity(), Content.AUTH_TOKEN_REQUEST_CODE);
+
                                     getActivity().finish();
 
 
