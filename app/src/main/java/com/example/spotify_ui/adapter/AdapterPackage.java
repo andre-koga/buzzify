@@ -53,7 +53,7 @@ public class AdapterPackage extends FirestoreRecyclerAdapter<Users, AdapterPacka
             @Override
             public void onClick(View v) {
                 // when the duo wrap button is clicked, we should check both jsons and then "merge" them
-                CreateDuoWrapJSON();
+                CreateDuoWrapJSON(model, MainActivity.userModel);
             }
         });
     }
@@ -80,7 +80,7 @@ public class AdapterPackage extends FirestoreRecyclerAdapter<Users, AdapterPacka
     }
 
     // duo wrap stuff
-    public JSONObject CreateDuoWrapJSON() {
+    public JSONObject CreateDuoWrapJSON(Users model, Users otherModel) {
         // retrieve wrap from friend, and retrieve wrap from myself
 
 
