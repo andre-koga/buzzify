@@ -27,6 +27,7 @@ public class AdapterPackage extends FirestoreRecyclerAdapter<Users, AdapterPacka
 
     Context context;
     Button addButton;
+    Button duoWrapped;
 
     public AdapterPackage(@NonNull FirestoreRecyclerOptions<Users> options, Context context) {
         super(options);
@@ -64,6 +65,7 @@ public class AdapterPackage extends FirestoreRecyclerAdapter<Users, AdapterPacka
             usernameText = itemView.findViewById(R.id.user_name_text);
             profilePic = itemView.findViewById(R.id.profile_pic_image_view);
             addButton = itemView.findViewById(R.id.addButton);
+            duoWrapped = itemView.findViewById(R.id.duoWrapped);
 
         }
     }
