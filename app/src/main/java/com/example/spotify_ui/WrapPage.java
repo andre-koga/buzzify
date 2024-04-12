@@ -26,6 +26,9 @@ public class WrapPage extends Fragment {
     public Button homeBttn;
     public Button dashboardBttn;
     public Button notificationBttn;
+
+    public Button backButton;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
@@ -47,6 +50,16 @@ public class WrapPage extends Fragment {
 
         notificationBttn = view.findViewById(R.id.button4);
         notificationBttn.setVisibility(View.VISIBLE);
+
+        backButton = view.findViewById(R.id.back_btn);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(WrapPage.this).navigate(R.id.action_navigation_wrap_page_to_navigation_home);
+//                NavHostFragment.findNavController(WrapPage.this).popBackStack();
+            }
+        });
 
         homeBttn.setOnClickListener(new View.OnClickListener() {
             @Override

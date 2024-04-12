@@ -4,12 +4,18 @@ package com.example.spotify_ui.ui.home;
 import static com.example.spotify_ui.Visibility.YOU;
 import static com.example.spotify_ui.Wraps.wrap_list;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,6 +38,7 @@ public class HomeFragment extends Fragment {
     public Button dashboardBttn;
     public Button notificationBttn;
 
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
@@ -43,22 +50,47 @@ public class HomeFragment extends Fragment {
 
         final TextView textView = binding.textHome;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        final Button generate = binding.generateWraps;
+//        final Button generate = binding.generateWraps;
         final LinearLayout main = binding.main;
         for (int i = 0; i < wrap_list.size(); i++) {
             Wraps wrap = wrap_list.get(i);
             wrap.createWidget(main, wrap, HomeFragment.this);
         }
 
+//        generate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Wraps wrap = new Wraps(YOU, "a", "z", "L");
+//                wrap_list.add(wrap);
+//                wrap.createWidget(main, wrap, HomeFragment.this);
+//            }
+//
+//        });
 
-        generate.setOnClickListener(new View.OnClickListener() {
+        Spinner spinner = root.findViewById(R.id.time_picker);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                getActivity(),
+                R.array.time_options,
+                android.R.layout.simple_spinner_item
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selected = (String) parent.getItemAtPosition(position);
+                if (selected.equals("Select wrap timeframe")) {
+                    return;
+                }
                 Wraps wrap = new Wraps(YOU, "a", "z", "L");
                 wrap_list.add(wrap);
                 wrap.createWidget(main, wrap, HomeFragment.this);
             }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+            }
         });
 
 
@@ -93,6 +125,7 @@ public class HomeFragment extends Fragment {
                 NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.action_navigation_home_to_navigation_notifications);
             }
         });
+
 
     }
 
