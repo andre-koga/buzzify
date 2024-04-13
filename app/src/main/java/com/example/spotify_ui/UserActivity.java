@@ -41,6 +41,7 @@ public class UserActivity extends Fragment {
 
 
 
+
     final String TAG = "UserActivity";
 
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -120,8 +121,9 @@ public class UserActivity extends Fragment {
         resetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String newPassword = resetEditor.toString();
-                user.updatePassword(newPassword)
+                String newPassword = resetEditor.getText().toString();
+                FirebaseAuth.getInstance().getCurrentUser().updatePassword(newPassword)
+
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
@@ -130,12 +132,26 @@ public class UserActivity extends Fragment {
                                 }
                             }
                         });
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+                String emailAddress = user.getEmail();;
+
+                auth.sendPasswordResetEmail(emailAddress)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "Email sent.");
+                                }
+                            }
+                        });
             }
         });
+
         resetEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String newPassword = resetEditor.toString();
+                String newPassword = resetEditor.getText().toString();
+
                 user.updateEmail(newPassword)
 
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -147,8 +163,22 @@ public class UserActivity extends Fragment {
                                 }
                             }
                         });
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+                String emailAddress = user.getEmail();;
+
+                auth.sendPasswordResetEmail(emailAddress)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "Email sent.");
+                                }
+                            }
+                        });
             }
+
         });
+
     }
 
 }

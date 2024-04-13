@@ -113,7 +113,9 @@
             android:padding="8dp"
             android:textColorHint="@color/white"
             tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="378dp" />
+            tools:layout_editor_absoluteY="378dp"
+            android:textColor="@color/white"
+            />
         <LinearLayout
             android:id="@+id/ll3"
             android:layout_width="match_parent"
