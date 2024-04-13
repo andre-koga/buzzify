@@ -70,8 +70,6 @@ public class Content extends AppCompatActivity {
 //                .build();
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
     }
-
-
     // more spotify api code here
     /**
      * Get token from Spotify

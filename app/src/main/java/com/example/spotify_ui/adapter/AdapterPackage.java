@@ -79,7 +79,6 @@ public class AdapterPackage extends FirestoreRecyclerAdapter<Users, AdapterPacka
             profilePic = itemView.findViewById(R.id.profile_pic_image_view);
             addButton = itemView.findViewById(R.id.addButton);
             duoWrapped = itemView.findViewById(R.id.duoWrapped);
-
         }
     }
     public void CreateDuoWrapJSONHelper(String otherId) {

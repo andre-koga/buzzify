@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,11 +31,14 @@ public class UserActivity extends Fragment {
     Button btnDelete;
     Button btnResetPassword;
     Button btnFriends;
-
+    Button resetPassword;
     Button btnBack;
     TextView txtUser;
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
+    EditText resetEditor;
+    Button resetEmail;
+
 
 
     final String TAG = "UserActivity";
@@ -60,7 +64,9 @@ public class UserActivity extends Fragment {
         txtUser = (TextView) view.findViewById(R.id.txtUser);
         user = firebaseAuth.getCurrentUser();
         txtUser.setText(user.getEmail());
-
+        resetPassword = (Button) view.findViewById(R.id.resetPass);
+        resetEmail = view.findViewById(R.id.resetEmail);
+        resetEditor = view.findViewById(R.id.enter);
 
 
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -111,8 +117,38 @@ public class UserActivity extends Fragment {
 
 
 
+        resetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String newPassword = resetEditor.toString();
+                user.updatePassword(newPassword)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "User password updated.");
+                                }
+                            }
+                        });
+            }
+        });
+        resetEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String newPassword = resetEditor.toString();
+                user.updateEmail(newPassword)
 
-
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "User Email updated.");
+                                    txtUser.setText(newPassword);
+                                }
+                            }
+                        });
+            }
+        });
     }
 
 }
