@@ -18,14 +18,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.spotify_ui.MainActivity;
 import com.example.spotify_ui.R;
 import com.example.spotify_ui.model.Users;
+import com.example.spotify_ui.ui.home.HomeFragment;
 import com.example.spotify_ui.utils.FirebaseUtil;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-
-import org.json.JSONObject;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 
@@ -97,22 +98,34 @@ public class AdapterPackage extends FirestoreRecyclerAdapter<Users, AdapterPacka
                     data.put("title", title);
                     data.put("artists", artists);
                     data.put("tracks", tracks);
+                    data.put("email", FirebaseAuth.getInstance().getCurrentUser().getEmail());
                     break;
                 }
                 CollectionReference allWraps2 = FirebaseUtil.getAllWraps(otherId);
                 allWraps2.get().addOnCompleteListener(task1 -> {
-                    if (task.isSuccessful()) {
-                        for (DocumentSnapshot doc : task.getResult()) {
+                    if (task1.isSuccessful()) {
+                        for (DocumentSnapshot doc : task1.getResult()) {
                             String title = (String) doc.get("Title");
                             String artists = (String) doc.get("Artists");
                             String tracks = (String) doc.get("Tracks");
+                            DocumentReference ref = FirebaseFirestore.getInstance().collection("users").document(otherId);
+                            ref.get().addOnCompleteListener(task3 -> {
+                                if (task3.isSuccessful()) {
+                                    DocumentSnapshot otherAccount = task3.getResult();
+                                    String otherEmail = (String) otherAccount.get("username");
+                                    data.put("title2", title);
+                                    data.put("artists2", artists);
+                                    data.put("tracks2", tracks);
+                                    data.put("email2", otherEmail);
+                                    data.put("otherId", otherEmail);
 
-                            otherData.put("title", title);
-                            otherData.put("artists", artists);
-                            otherData.put("tracks", tracks);
-                            break;
+
+                                    HomeFragment.CreateDuoWrapJSON(data, otherData, otherId);
+                                }
+                            });
                         }
-                        CreateDuoWrapJSON(data, otherData);
+
+
 
                     }
                 });
@@ -121,13 +134,22 @@ public class AdapterPackage extends FirestoreRecyclerAdapter<Users, AdapterPacka
 
 
     }
-    public JSONObject CreateDuoWrapJSON(HashMap<String, String> yourData, HashMap<String, String> otherData) {
-        // retrieve wrap from friend, and retrieve wrap from myself
-
-
-        JSONObject result = new JSONObject();
-
-        return result;
-    }
+//    public JSONObject CreateDuoWrapJSON(HashMap<String, String> yourData, HashMap<String, String> otherData, String otherId) {
+//        // retrieve wrap from friend, and retrieve wrap from myself
+//
+//
+//        DocumentReference ref1 = FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getUid()).collection("duowraps").document(yourData.get("email") + otherData.get("email"));
+//        ref1.set(yourData);
+//        ref1.set(otherData);
+//
+//        DocumentReference ref2 = FirebaseFirestore.getInstance().collection("users").document(otherId).collection("duowraps").document(otherData.get("email") + yourData.get("email"));
+//        ref2.set(otherData);
+//        ref2.set(yourData);
+//
+//        Wraps.createDuoWrapWidget();
+//
+//
+//
+//    }
 
 }

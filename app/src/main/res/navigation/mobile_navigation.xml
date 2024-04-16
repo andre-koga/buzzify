@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_user_activity"
             app:destination="@id/navigation_user_activity" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_duo_wrap_page"
+            app:destination="@id/navigation_duo_wrap_page" />
 
     </fragment>
 
@@ -46,6 +49,10 @@
         <action
             android:id="@+id/action_navigation_friends_to_navigation_user_activity"
             app:destination="@id/navigation_user_activity" />
+
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_duo_wrap_page"
+            app:destination="@id/navigation_duo_wrap_page" />
     </fragment>
 
 
@@ -80,4 +87,23 @@
             android:id="@+id/action_navigation_friends_list_to_navigation_user_activity"
             app:destination="@id/navigation_user_activity" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_duo_wrap_page"
+        android:name="com.example.spotify_ui.DuoWrapPage"
+        android:label="OpenDuoWrapPage">
+        <action
+            android:id="@+id/action_navigation_duo_wrap_page_to_navigation_home"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_navigation_duo_wrap_page_to_navigation_dashboard"
+            app:destination="@id/navigation_friends" />
+        <action
+            android:id="@+id/action_navigation_duo_wrap_page_to_navigation_notifications"
+            app:destination="@id/navigation_public" />
+        <action
+            android:id="@+id/action_navigation_duo_wrap_page_to_navigation_user_activity"
+            app:destination="@id/navigation_user_activity" />
+    </fragment>
+
 </navigation>
