@@ -27,6 +27,8 @@ import com.example.spotify_ui.Wraps;
 import com.example.spotify_ui.databinding.FragmentHomeBinding;
 import com.example.spotify_ui.utils.FirebaseUtil;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,6 +54,7 @@ public class HomeFragment extends Fragment {
     public Button homeBttn;
     public Button dashboardBttn;
 
+    static LinearLayout main;
     private String title;
 
 
@@ -75,7 +78,7 @@ public class HomeFragment extends Fragment {
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         final Spinner spinner = binding.timePicker;
 
-        final LinearLayout main = binding.main;
+        main = binding.main;
 
 
 //        generate.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +127,7 @@ public class HomeFragment extends Fragment {
 
 
         Wraps.createStoredWidgets(main);
+        Wraps.createDuoWrapWidget(main);
 
 
 
@@ -286,6 +290,24 @@ public class HomeFragment extends Fragment {
                 });
             }
         });
+    }
+
+    public static void CreateDuoWrapJSON(HashMap<String, String> yourData, HashMap<String, String> otherData, String otherId) {
+        // retrieve wrap from friend, and retrieve wrap from myself
+
+
+        DocumentReference ref1 = FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getUid()).collection("duowraps").document(yourData.get("email") + " + " + yourData.get("email2"));
+        ref1.set(yourData);
+
+
+        DocumentReference ref2 = FirebaseFirestore.getInstance().collection("users").document(otherId).collection("duowraps").document(yourData.get("email2") + " + " + yourData.get("email"));
+
+        ref2.set(yourData);
+
+
+
+
+
     }
 
     private void cancelCall() {
