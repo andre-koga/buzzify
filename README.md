@@ -7,8 +7,7 @@ CS 2340 Project 2: Buzzify!
 - Matthias Druhl - Developer
 - Tony Nguyen - Developer
 - Valentina Garcia - UI/UX
-- Ariam Netsereab
-
+  
 ## Description:
 Create, visualize, and manage your Spotify Wraps using Buzzify!
 
