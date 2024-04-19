@@ -2,11 +2,11 @@
 CS 2340 Project 2: Buzzify!
 
 ## Authors / Roles:
-- Andre Koga - Product Owner
-- Xavier Genio - Scrum Master
-- Matthias Druhl - Developer
-- Tony Nguyen - Developer
-- Valentina Garcia - UI/UX
+- Andre Koga - Product Owner / API
+- Xavier Genio - Scrum Master / Documenter / Frontend
+- Matthias Druhl - Developer / Tech Support / Backend
+- Tony Nguyen - Developer / Backend
+- Valentina Garcia - Developer / Frontend
   
 ## Description:
 Create, visualize, and manage your Spotify Wraps using Buzzify!
