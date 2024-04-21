@@ -1,8 +1,5 @@
-package com.example.spotify_ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.spotify_ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -85,7 +86,8 @@ public class LoginActivity extends AppCompatActivity {
                             if (!task.isSuccessful()) {
                                 Toast.makeText(LoginActivity.this, "Not sucessfull", Toast.LENGTH_SHORT).show();
                             } else {
-                                startActivity(new Intent(LoginActivity.this, Content.class));
+                                Intent i = (new Intent(LoginActivity.this, Content.class));
+                                startActivity(i);
                             }
                         }
                     });

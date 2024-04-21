@@ -3,6 +3,13 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Friends</string>
     <string name="title_notifications">Public</string>
-    <string name="generate_wrap">Generate your Wrap!</string>
+    <string name="generate_wrap">Generate Wrap</string>
     <string name="your_wraps">Your Wraps</string>
+    <string name="select">Generate Wrap</string>
+    <string-array name="time_options">
+        <item>Select wrap timeframe</item>
+        <item>1 month wrap</item>
+        <item>6 months wrap</item>
+        <item>1 year wrap</item>
+    </string-array>
 </resources>
