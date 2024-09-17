@@ -1,4 +1,4 @@
-![Buzzify 🐝](.github/banner.webp)
+![Buzzify 🐝](.github/buzzify.png)
 
 > Create, visualize, and manage your Spotify Wraps using Buzzify!
 
